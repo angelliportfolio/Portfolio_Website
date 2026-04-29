@@ -1,7 +1,11 @@
 {
   "permissions": {
     "allow": [
-      "WebFetch(domain:angelliproductions.com)"
+      "WebFetch(domain:angelliproductions.com)",
+      "Bash(npm --version)",
+      "PowerShell(node --version)",
+      "PowerShell(npm --version)",
+      "PowerShell(Get-Command node, npm, npx -ErrorAction SilentlyContinue)"
     ]
   }
 }
