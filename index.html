@@ -2,815 +2,140 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <title>Angelli Nguyen | Photographer + Director</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Angelli Nguyen | Photographer + Director | Colorado</title>
-  <meta name="description" content="Angelli Nguyen — photographer and director based in Colorado, available worldwide. Fashion, beauty, advertising, and wedding photography. Film &amp; Digital.">
-  <meta property="og:title" content="Angelli Nguyen | Photographer + Director">
-  <meta property="og:description" content="For the quietly luxurious. Colorado based, available worldwide. Film &amp; Digital.">
-  <meta property="og:type" content="website">
+  <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <!-- ====================================================
-       HEADER
-       ==================================================== -->
-  <header id="site-header">
+<div class="hero-background"></div>
 
-    <!-- Primary Nav -->
-    <nav id="primary-nav" aria-label="Main navigation">
-      <a class="nav-logo" onclick="goHero()" role="button" tabindex="0" aria-label="Angelli Productions — home">
-        <span class="nav-logo-name">Angelli Nguyen</span>
-        <span class="nav-logo-role">Photographer &nbsp;&middot;&nbsp; Director</span>
-      </a>
-
-      <ul class="primary-tabs" role="tablist">
-        <li role="presentation">
-          <button class="primary-tab-btn"
-                  data-section="commercial"
-                  data-default-panel="fashion"
-                  role="tab"
-                  aria-selected="false">Commercial + Brands</button>
-        </li>
-        <li role="presentation">
-          <button class="primary-tab-btn"
-                  data-section="weddings"
-                  data-default-panel="weddings-home"
-                  role="tab"
-                  aria-selected="false">Weddings + Lifestyle</button>
-        </li>
-        <li role="presentation">
-          <button class="primary-tab-btn"
-                  data-section="contact"
-                  data-default-panel="contact"
-                  role="tab"
-                  aria-selected="false">Contact + About</button>
-        </li>
-      </ul>
-
-      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </nav>
-
-    <!-- Secondary Nav -->
-    <nav id="secondary-nav" aria-label="Section navigation">
-      <!-- Commercial sub-tabs -->
-      <ul class="secondary-tabs" id="subnav-commercial" role="tablist">
-        <li role="presentation">
-          <button class="secondary-tab-btn" data-panel="fashion" role="tab">Fashion</button>
-        </li>
-        <li role="presentation">
-          <button class="secondary-tab-btn" data-panel="beauty" role="tab">Beauty</button>
-        </li>
-        <li role="presentation">
-          <button class="secondary-tab-btn" data-panel="directing" role="tab">Directing</button>
-        </li>
-        <li role="presentation">
-          <button class="secondary-tab-btn" data-panel="commercial-contact" role="tab">Contact</button>
-        </li>
-      </ul>
-
-      <!-- Weddings sub-tabs -->
-      <ul class="secondary-tabs" id="subnav-weddings" role="tablist">
-        <li role="presentation">
-          <button class="secondary-tab-btn" data-panel="weddings-home" role="tab">Home</button>
-        </li>
-        <li role="presentation">
-          <button class="secondary-tab-btn" data-panel="about" role="tab">About</button>
-        </li>
-        <li role="presentation">
-          <button class="secondary-tab-btn" data-panel="weddings" role="tab">Weddings</button>
-        </li>
-        <li role="presentation">
-          <button class="secondary-tab-btn" data-panel="couples" role="tab">Couples</button>
-        </li>
-        <li role="presentation">
-          <button class="secondary-tab-btn" data-panel="portraits" role="tab">Portraits</button>
-        </li>
-        <li role="presentation">
-          <button class="secondary-tab-btn" data-panel="inquire" role="tab">Inquire</button>
-        </li>
-      </ul>
-    </nav>
-
-  </header>
-
-  <!-- ====================================================
-       MOBILE MENU
-       ==================================================== -->
-  <div id="mobile-menu" role="dialog" aria-label="Navigation menu" aria-modal="true">
-    <button class="mobile-close" id="mobile-close" aria-label="Close menu">&#10005;</button>
-
-    <span class="mobile-section-label">Portfolio</span>
-    <button class="mobile-nav-item" onclick="handleMobileNav('commercial','fashion')">Commercial + Brands</button>
-    <button class="mobile-nav-item" onclick="handleMobileNav('weddings','weddings-home')">Weddings + Lifestyle</button>
-
-    <span class="mobile-section-label">Work</span>
-    <button class="mobile-nav-item" onclick="handleMobileNav('commercial','fashion')">Fashion</button>
-    <button class="mobile-nav-item" onclick="handleMobileNav('commercial','beauty')">Beauty</button>
-    <button class="mobile-nav-item" onclick="handleMobileNav('commercial','directing')">Directing</button>
-    <button class="mobile-nav-item" onclick="handleMobileNav('weddings','weddings')">Weddings</button>
-    <button class="mobile-nav-item" onclick="handleMobileNav('weddings','couples')">Couples</button>
-    <button class="mobile-nav-item" onclick="handleMobileNav('weddings','portraits')">Portraits</button>
-
-    <span class="mobile-section-label">Connect</span>
-    <button class="mobile-nav-item" onclick="handleMobileNav('contact','contact')">Contact + About</button>
-    <button class="mobile-nav-item" onclick="handleMobileNav('weddings','inquire')">Inquire</button>
+<div class="page-wrapper">
+  
+  <div class="landing-header">
+    <h1>ANGELLI NGUYEN</h1>
+    <p>COLORADO BASED EDITORIAL &amp; WEDDING PHOTOGRAPHER</p>
   </div>
 
-  <!-- ====================================================
-       MAIN CONTENT
-       ==================================================== -->
-  <main id="main-content">
-
-    <!-- ======== HERO ======== -->
-    <section id="panel-hero" class="panel active" role="tabpanel" aria-label="Welcome">
-      <div class="hero-bg"></div>
-      <div class="hero-bg-overlay"></div>
-      <div class="hero-content">
-        <h1 class="hero-name">Angelli Nguyen</h1>
-        <p class="hero-role">Photographer &nbsp;&middot;&nbsp; Director</p>
-        <div class="hero-divider"></div>
-        <div class="hero-ctas">
-          <button class="hero-cta" onclick="switchToSection('commercial','fashion')">Commercial + Brands</button>
-          <button class="hero-cta" onclick="switchToSection('weddings','weddings-home')">Weddings + Lifestyle</button>
-        </div>
-      </div>
-      <div class="hero-scroll" aria-hidden="true">
-        <span class="hero-scroll-text">Scroll</span>
-        <div class="hero-scroll-line"></div>
-      </div>
-    </section>
-
-    <!-- ======== FASHION ======== -->
-    <section id="panel-fashion" class="panel" role="tabpanel" aria-label="Fashion">
-      <div class="panel-top">
-        <div class="section-header">
-          <p class="section-overline">Commercial + Brands</p>
-          <h2 class="section-title">Fashion</h2>
-          <p class="section-subtitle">Editorial fashion &amp; campaign imagery</p>
-        </div>
-      </div>
-
-      <div class="masonry-grid" data-gallery="fashion">
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Fashion editorial 01"><div class="photo-ph t-fashion r-portrait-tall"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Fashion editorial 02"><div class="photo-ph t-fashion r-landscape"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Fashion editorial 03"><div class="photo-ph t-fashion r-portrait"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Fashion editorial 04"><div class="photo-ph t-fashion r-square"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Fashion editorial 05"><div class="photo-ph t-fashion r-portrait-tall"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Fashion editorial 06"><div class="photo-ph t-fashion r-landscape"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Fashion editorial 07"><div class="photo-ph t-fashion r-portrait-tall"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Fashion editorial 08"><div class="photo-ph t-fashion r-portrait"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Fashion editorial 09"><div class="photo-ph t-fashion r-square"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Fashion editorial 10"><div class="photo-ph t-fashion r-landscape"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Fashion editorial 11"><div class="photo-ph t-fashion r-portrait-tall"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Fashion editorial 12"><div class="photo-ph t-fashion r-portrait"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Fashion editorial 13"><div class="photo-ph t-fashion r-landscape"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Fashion editorial 14"><div class="photo-ph t-fashion r-portrait-tall"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Fashion editorial 15"><div class="photo-ph t-fashion r-square"></div><div class="hover-overlay"></div></div>
-      </div>
-
-      <footer>
-        <p class="footer-logo">Angelli Nguyen</p>
-        <ul class="footer-nav">
-          <li><button onclick="switchToSection('commercial','fashion')">Fashion</button></li>
-          <li><button onclick="switchToSection('commercial','beauty')">Beauty</button></li>
-          <li><button onclick="switchToSection('commercial','directing')">Directing</button></li>
-          <li><button onclick="switchToSection('weddings','weddings-home')">Weddings</button></li>
-          <li><button onclick="switchToSection('contact','contact')">Contact</button></li>
-        </ul>
-        <p class="footer-copy">&copy; 2024 Angelli Nguyen &nbsp;&middot;&nbsp; Colorado based, available worldwide.</p>
-      </footer>
-    </section>
-
-    <!-- ======== BEAUTY ======== -->
-    <section id="panel-beauty" class="panel" role="tabpanel" aria-label="Beauty">
-      <div class="panel-top">
-        <div class="section-header">
-          <p class="section-overline">Commercial + Brands</p>
-          <h2 class="section-title">Beauty</h2>
-          <p class="section-subtitle">Beauty, cosmetics &amp; skincare campaigns</p>
-        </div>
-      </div>
-
-      <div class="masonry-grid" data-gallery="beauty">
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Beauty campaign 01"><div class="photo-ph t-beauty r-portrait-tall"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Beauty campaign 02"><div class="photo-ph t-beauty r-portrait"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Beauty campaign 03"><div class="photo-ph t-beauty r-square"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Beauty campaign 04"><div class="photo-ph t-beauty r-portrait-tall"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Beauty campaign 05"><div class="photo-ph t-beauty r-landscape"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Beauty campaign 06"><div class="photo-ph t-beauty r-portrait-tall"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Beauty campaign 07"><div class="photo-ph t-beauty r-portrait"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Beauty campaign 08"><div class="photo-ph t-beauty r-landscape"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Beauty campaign 09"><div class="photo-ph t-beauty r-portrait-tall"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Beauty campaign 10"><div class="photo-ph t-beauty r-square"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Beauty campaign 11"><div class="photo-ph t-beauty r-portrait"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Beauty campaign 12"><div class="photo-ph t-beauty r-portrait-tall"></div><div class="hover-overlay"></div></div>
-      </div>
-
-      <footer>
-        <p class="footer-logo">Angelli Nguyen</p>
-        <ul class="footer-nav">
-          <li><button onclick="switchToSection('commercial','fashion')">Fashion</button></li>
-          <li><button onclick="switchToSection('commercial','beauty')">Beauty</button></li>
-          <li><button onclick="switchToSection('commercial','directing')">Directing</button></li>
-          <li><button onclick="switchToSection('weddings','weddings-home')">Weddings</button></li>
-          <li><button onclick="switchToSection('contact','contact')">Contact</button></li>
-        </ul>
-        <p class="footer-copy">&copy; 2024 Angelli Nguyen &nbsp;&middot;&nbsp; Colorado based, available worldwide.</p>
-      </footer>
-    </section>
-
-    <!-- ======== DIRECTING ======== -->
-    <section id="panel-directing" class="panel" role="tabpanel" aria-label="Directing">
-      <div class="panel-top">
-        <div class="section-header">
-          <p class="section-overline">Commercial + Brands</p>
-          <h2 class="section-title">Directing</h2>
-          <p class="section-subtitle">Film direction, motion campaigns &amp; visual storytelling</p>
-        </div>
-      </div>
-
-      <div class="reel-wrap">
-        <!--
-          REPLACE THIS BLOCK with your video embed, e.g.:
-          <iframe src="https://player.vimeo.com/video/YOUR_VIDEO_ID?autoplay=0&title=0&byline=0&portrait=0"
-                  style="width:100%;aspect-ratio:16/9;" frameborder="0"
-                  allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
-        -->
-        <div class="reel-frame" role="img" aria-label="Showreel placeholder — add Vimeo or YouTube embed">
-          <div class="reel-play-btn" aria-hidden="true"></div>
-        </div>
-        <p class="reel-caption">Showreel &nbsp;&mdash;&nbsp; Replace with your video embed</p>
-      </div>
-
-      <p class="stills-label">Selected Stills</p>
-
-      <div class="masonry-grid" data-gallery="directing">
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Directing still 01"><div class="photo-ph t-directing r-landscape"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Directing still 02"><div class="photo-ph t-directing r-portrait"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Directing still 03"><div class="photo-ph t-directing r-landscape-wide"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Directing still 04"><div class="photo-ph t-directing r-landscape"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Directing still 05"><div class="photo-ph t-directing r-portrait-tall"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Directing still 06"><div class="photo-ph t-directing r-landscape"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Directing still 07"><div class="photo-ph t-directing r-portrait"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Directing still 08"><div class="photo-ph t-directing r-landscape"></div><div class="hover-overlay"></div></div>
-      </div>
-
-      <footer>
-        <p class="footer-logo">Angelli Nguyen</p>
-        <ul class="footer-nav">
-          <li><button onclick="switchToSection('commercial','fashion')">Fashion</button></li>
-          <li><button onclick="switchToSection('commercial','beauty')">Beauty</button></li>
-          <li><button onclick="switchToSection('commercial','directing')">Directing</button></li>
-          <li><button onclick="switchToSection('weddings','weddings-home')">Weddings</button></li>
-          <li><button onclick="switchToSection('contact','contact')">Contact</button></li>
-        </ul>
-        <p class="footer-copy">&copy; 2024 Angelli Nguyen &nbsp;&middot;&nbsp; Colorado based, available worldwide.</p>
-      </footer>
-    </section>
-
-    <!-- ======== COMMERCIAL CONTACT ======== -->
-    <section id="panel-commercial-contact" class="panel" role="tabpanel" aria-label="Commercial contact">
-      <div class="panel-top">
-        <div class="section-header">
-          <p class="section-overline">Commercial + Brands</p>
-          <h2 class="section-title">Let's Work Together</h2>
-        </div>
-      </div>
-
-      <div class="form-section">
-        <div class="form-intro">
-          <p class="form-intro-text">
-            Available for fashion editorials, beauty campaigns, advertising, and direction.<br>
-            Colorado based. Available worldwide.<br><br>
-            For inquiries, project rates, and licensing, fill out the form below.
-            I respond within 48 hours.
-          </p>
-        </div>
-
-        <form id="commercial-form" novalidate>
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label" for="cf-name">Name *</label>
-              <input class="form-input" type="text" id="cf-name" name="name" placeholder="Your name" required>
+  <div class="accordion-container">
+    
+    <!-- Commercial + Brands -->
+    <div class="accordion-item" id="acc-commercial">
+      <button class="accordion-tab">Commercial + Brands</button>
+      <div class="accordion-content">
+        <div class="accordion-inner">
+          <header class="commercial-header">
+            <div class="logo-block">
+              <h2>ANGELLI NGUYEN</h2>
+              <span>PHOTOGRAPHER - DIRECTOR</span>
             </div>
-            <div class="form-group">
-              <label class="form-label" for="cf-email">Email *</label>
-              <input class="form-input" type="email" id="cf-email" name="email" placeholder="your@email.com" required>
+            <nav class="commercial-nav">
+              <a href="#">FASHION</a>
+              <a href="#">BEAUTY</a>
+              <a href="#">ADVERTISING</a>
+              <a href="#">DIRECTING</a>
+              <a href="#">CONTACT</a>
+            </nav>
+          </header>
+          
+          <div class="commercial-grid">
+            <div class="grid-img t-fashion r-square"></div>
+            <div class="grid-img t-beauty r-square"></div>
+            <div class="grid-img t-fashion r-square"></div>
+            <div class="grid-img t-beauty r-square"></div>
+            <div class="grid-img t-fashion r-square"></div>
+            <div class="grid-img t-beauty r-square"></div>
+            <div class="grid-img t-fashion r-square"></div>
+            <div class="grid-img t-beauty r-square"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Weddings + Lifestyle -->
+    <div class="accordion-item" id="acc-weddings">
+      <button class="accordion-tab">Weddings + Lifestyle</button>
+      <div class="accordion-content">
+        <div class="accordion-inner">
+          
+          <!-- Weddings Part 3: Header section now at top -->
+          <div class="weddings-section-3">
+            <header class="weddings-header">
+              <a href="#" class="btn-link" style="margin-top:0;">INQUIRE &rarr;</a>
+              <h2 class="weddings-logo">ANGELLI NGUYEN</h2>
+              <div class="menu-icon">=</div>
+            </header>
+            <div class="two-col-grid">
+               <div class="grid-img t-wedding r-portrait-tall"></div>
+               <div class="grid-img t-wedding r-portrait-tall"></div>
             </div>
           </div>
-
-          <div class="form-group">
-            <label class="form-label" for="cf-company">Company / Brand</label>
-            <input class="form-input" type="text" id="cf-company" name="company" placeholder="Brand or agency name (optional)">
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="cf-service">Service Type *</label>
-            <select class="form-select" id="cf-service" name="service" required>
-              <option value="" disabled selected>Select a service</option>
-              <option value="fashion">Fashion Editorial</option>
-              <option value="beauty">Beauty Campaign</option>
-              <option value="advertising">Advertising / Campaign</option>
-              <option value="directing">Film Direction</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="cf-message">Project Details *</label>
-            <textarea class="form-textarea" id="cf-message" name="message" placeholder="Tell me about your project, timeline, and vision&#8230;" required></textarea>
-          </div>
-
-          <button type="submit" class="form-submit">Send Inquiry &nbsp;&#8594;</button>
-          <p class="form-note">I'll be in touch within 48 hours.</p>
-        </form>
-
-        <div class="form-success" id="commercial-form-success">
-          <div class="form-success-icon">&#10022;</div>
-          <h3 class="form-success-title">Message received.</h3>
-          <p class="form-success-text">Thank you for reaching out. I'll be in touch within 48 hours.</p>
-        </div>
-      </div>
-
-      <footer>
-        <p class="footer-logo">Angelli Nguyen</p>
-        <ul class="footer-nav">
-          <li><button onclick="switchToSection('commercial','fashion')">Fashion</button></li>
-          <li><button onclick="switchToSection('commercial','beauty')">Beauty</button></li>
-          <li><button onclick="switchToSection('weddings','weddings-home')">Weddings</button></li>
-          <li><button onclick="switchToSection('contact','contact')">Contact</button></li>
-        </ul>
-        <p class="footer-copy">&copy; 2024 Angelli Nguyen &nbsp;&middot;&nbsp; Colorado based, available worldwide.</p>
-      </footer>
-    </section>
-
-    <!-- ======== WEDDINGS HOME ======== -->
-    <section id="panel-weddings-home" class="panel" role="tabpanel" aria-label="Weddings home">
-      <div class="weddings-hero">
-        <div class="weddings-hero-bg"></div>
-        <div class="weddings-hero-overlay"></div>
-        <div class="weddings-hero-content">
-          <p class="wh-quiet">for the quietly luxurious</p>
-          <h2 class="wh-title">Bridal.&thinsp;Meets.&thinsp;Editorial.</h2>
-          <p class="wh-meta">
-            Colorado based, available worldwide.<br>
-            Film &amp; Digital
-          </p>
-          <div class="wh-ctas">
-            <button class="text-btn" onclick="switchToPanel('weddings')">View Weddings &nbsp;&#8594;</button>
-            <button class="text-btn" onclick="switchToPanel('about')">My Approach &nbsp;&#8594;</button>
-            <button class="text-btn" onclick="switchToPanel('inquire')">Inquire &nbsp;&#8594;</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="lifestyle-strip">
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Lifestyle 01"><div class="photo-ph t-wedding r-portrait-tall"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Lifestyle 02"><div class="photo-ph t-wedding r-portrait-tall"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Lifestyle 03"><div class="photo-ph t-wedding r-portrait-tall"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Lifestyle 04"><div class="photo-ph t-wedding r-portrait-tall"></div><div class="hover-overlay"></div></div>
-      </div>
-
-      <footer>
-        <p class="footer-logo">Angelli Nguyen</p>
-        <ul class="footer-nav">
-          <li><button onclick="switchToPanel('about')">About</button></li>
-          <li><button onclick="switchToPanel('weddings')">Weddings</button></li>
-          <li><button onclick="switchToPanel('couples')">Couples</button></li>
-          <li><button onclick="switchToPanel('portraits')">Portraits</button></li>
-          <li><button onclick="switchToPanel('inquire')">Inquire</button></li>
-        </ul>
-        <p class="footer-copy">&copy; 2024 Angelli Nguyen &nbsp;&middot;&nbsp; Colorado based, available worldwide.</p>
-      </footer>
-    </section>
-
-    <!-- ======== ABOUT ======== -->
-    <section id="panel-about" class="panel" role="tabpanel" aria-label="About">
-      <div class="panel-top">
-        <div class="section-header">
-          <p class="section-overline">Weddings + Lifestyle</p>
-          <h2 class="section-title">Romance, held in time.</h2>
-        </div>
-      </div>
-
-      <div class="about-layout">
-        <div class="about-image-wrap">
-          <!-- Replace with your portrait: <img src="YOUR_CLOUDINARY_URL" alt="Angelli Nguyen, photographer"> -->
-          <div class="photo-ph t-portraits" style="height:620px;"></div>
-          <div class="about-image-tag">Film &amp; Digital</div>
-        </div>
-
-        <div class="about-content">
-          <p class="about-overline">The Photographer</p>
-          <h3 class="about-heading">My approach is built around honoring<br>the atmosphere of your day.</h3>
-          <p class="about-body">
-            The light through a venue window at golden hour. The quiet before
-            the first look. The way a moment breathes right before something
-            important happens. These are the details I live for &mdash; the ones that,
-            when captured, transform a photograph into a memory you can feel.
-          </p>
-          <p class="about-body">
-            I photograph for couples who want imagery that is quietly luxurious.
-            Editorial without being cold. Deeply personal, and always,
-            unmistakably theirs.
-          </p>
-          <p class="about-body">
-            Based in Colorado and available for destination weddings worldwide,
-            I work with both film and digital, choosing the medium that best
-            serves the light and the mood of each unique day.
-          </p>
-          <p class="about-signature">&#8212; Angelli</p>
-          <p class="about-location">Colorado &nbsp;&middot;&nbsp; Available Worldwide</p>
-        </div>
-      </div>
-
-      <footer>
-        <p class="footer-logo">Angelli Nguyen</p>
-        <ul class="footer-nav">
-          <li><button onclick="switchToPanel('weddings')">Weddings</button></li>
-          <li><button onclick="switchToPanel('couples')">Couples</button></li>
-          <li><button onclick="switchToPanel('portraits')">Portraits</button></li>
-          <li><button onclick="switchToPanel('inquire')">Inquire</button></li>
-        </ul>
-        <p class="footer-copy">&copy; 2024 Angelli Nguyen &nbsp;&middot;&nbsp; Colorado based, available worldwide.</p>
-      </footer>
-    </section>
-
-    <!-- ======== WEDDINGS COLLECTIONS ======== -->
-    <section id="panel-weddings" class="panel" role="tabpanel" aria-label="Wedding collections">
-      <div class="panel-top">
-        <div class="section-header">
-          <p class="section-overline">Weddings + Lifestyle</p>
-          <h2 class="section-title">Weddings</h2>
-          <p class="section-subtitle">Each wedding is its own world. Here are a few.</p>
-        </div>
-      </div>
-
-      <div class="collections-grid">
-        <div class="collection-card"
-             onclick="openCollection('bonnie-blues', &quot;Bonnie Blue’s Event Venue&quot;, 'Elizabeth, Colorado')"
-             tabindex="0" role="button"
-             aria-label="Bonnie Blue's Event Venue">
-          <div class="photo-ph t-wedding" style="position:absolute;inset:0;padding-bottom:0;height:100%;transition:transform 0.65s cubic-bezier(.4,0,.2,1);"></div>
-          <div class="collection-overlay">
-            <h3 class="collection-venue">Bonnie Blue&#8217;s Event Venue</h3>
-            <p class="collection-location">Elizabeth, Colorado</p>
-            <span class="collection-cta">View Collection</span>
-          </div>
-        </div>
-
-        <div class="collection-card"
-             onclick="openCollection('della-terra', 'Della Terra by Wedgewood Weddings', 'Estes Park, Colorado')"
-             tabindex="0" role="button"
-             aria-label="Della Terra by Wedgewood Weddings">
-          <div class="photo-ph t-couples" style="position:absolute;inset:0;padding-bottom:0;height:100%;transition:transform 0.65s cubic-bezier(.4,0,.2,1);"></div>
-          <div class="collection-overlay">
-            <h3 class="collection-venue">Della Terra</h3>
-            <p class="collection-location">Estes Park, Colorado</p>
-            <span class="collection-cta">View Collection</span>
-          </div>
-        </div>
-
-        <div class="collection-card"
-             onclick="openCollection('camp-hale', 'Camp Hale', 'Vail, Colorado')"
-             tabindex="0" role="button"
-             aria-label="Camp Hale, Vail">
-          <div class="photo-ph t-portraits" style="position:absolute;inset:0;padding-bottom:0;height:100%;transition:transform 0.65s cubic-bezier(.4,0,.2,1);"></div>
-          <div class="collection-overlay">
-            <h3 class="collection-venue">Camp Hale</h3>
-            <p class="collection-location">Vail, Colorado</p>
-            <span class="collection-cta">View Collection</span>
-          </div>
-        </div>
-      </div>
-
-      <div style="text-align:center;padding:0 40px 80px;">
-        <p style="font-family:var(--sans);font-size:10px;letter-spacing:0.3em;text-transform:uppercase;color:var(--meta);margin-bottom:20px;">More collections coming soon</p>
-        <button class="text-btn" style="display:inline-flex;" onclick="switchToPanel('inquire')">Inquire about your date &nbsp;&#8594;</button>
-      </div>
-
-      <footer>
-        <p class="footer-logo">Angelli Nguyen</p>
-        <ul class="footer-nav">
-          <li><button onclick="switchToPanel('about')">About</button></li>
-          <li><button onclick="switchToPanel('couples')">Couples</button></li>
-          <li><button onclick="switchToPanel('portraits')">Portraits</button></li>
-          <li><button onclick="switchToPanel('inquire')">Inquire</button></li>
-        </ul>
-        <p class="footer-copy">&copy; 2024 Angelli Nguyen &nbsp;&middot;&nbsp; Colorado based, available worldwide.</p>
-      </footer>
-    </section>
-
-    <!-- ======== COUPLES ======== -->
-    <section id="panel-couples" class="panel" role="tabpanel" aria-label="Couples">
-      <div class="panel-top">
-        <div class="section-header">
-          <p class="section-overline">Weddings + Lifestyle</p>
-          <h2 class="section-title">Couples</h2>
-          <p class="section-subtitle">Engagement sessions &amp; styled couples work</p>
-        </div>
-      </div>
-
-      <div class="masonry-grid" data-gallery="couples">
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Couples 01"><div class="photo-ph t-couples r-portrait-tall"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Couples 02"><div class="photo-ph t-couples r-landscape"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Couples 03"><div class="photo-ph t-couples r-portrait"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Couples 04"><div class="photo-ph t-couples r-portrait-tall"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Couples 05"><div class="photo-ph t-couples r-square"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Couples 06"><div class="photo-ph t-couples r-landscape"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Couples 07"><div class="photo-ph t-couples r-portrait-tall"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Couples 08"><div class="photo-ph t-couples r-portrait"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Couples 09"><div class="photo-ph t-couples r-landscape"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Couples 10"><div class="photo-ph t-couples r-portrait-tall"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Couples 11"><div class="photo-ph t-couples r-square"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Couples 12"><div class="photo-ph t-couples r-portrait"></div><div class="hover-overlay"></div></div>
-      </div>
-
-      <footer>
-        <p class="footer-logo">Angelli Nguyen</p>
-        <ul class="footer-nav">
-          <li><button onclick="switchToPanel('about')">About</button></li>
-          <li><button onclick="switchToPanel('weddings')">Weddings</button></li>
-          <li><button onclick="switchToPanel('portraits')">Portraits</button></li>
-          <li><button onclick="switchToPanel('inquire')">Inquire</button></li>
-        </ul>
-        <p class="footer-copy">&copy; 2024 Angelli Nguyen &nbsp;&middot;&nbsp; Colorado based, available worldwide.</p>
-      </footer>
-    </section>
-
-    <!-- ======== PORTRAITS ======== -->
-    <section id="panel-portraits" class="panel" role="tabpanel" aria-label="Portraits">
-      <div class="panel-top">
-        <div class="section-header">
-          <p class="section-overline">Weddings + Lifestyle</p>
-          <h2 class="section-title">Portraits</h2>
-          <p class="section-subtitle">Individual portrait sessions &amp; personal branding</p>
-        </div>
-      </div>
-
-      <div class="masonry-grid" data-gallery="portraits">
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Portrait 01"><div class="photo-ph t-portraits r-portrait-tall"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Portrait 02"><div class="photo-ph t-portraits r-portrait"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Portrait 03"><div class="photo-ph t-portraits r-landscape"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Portrait 04"><div class="photo-ph t-portraits r-portrait-tall"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Portrait 05"><div class="photo-ph t-portraits r-square"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Portrait 06"><div class="photo-ph t-portraits r-portrait-tall"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Portrait 07"><div class="photo-ph t-portraits r-landscape"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Portrait 08"><div class="photo-ph t-portraits r-portrait"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Portrait 09"><div class="photo-ph t-portraits r-portrait-tall"></div><div class="hover-overlay"></div></div>
-        <div class="masonry-item" onclick="openLightbox(this)" tabindex="0" role="button" aria-label="Portrait 10"><div class="photo-ph t-portraits r-square"></div><div class="hover-overlay"></div></div>
-      </div>
-
-      <footer>
-        <p class="footer-logo">Angelli Nguyen</p>
-        <ul class="footer-nav">
-          <li><button onclick="switchToPanel('about')">About</button></li>
-          <li><button onclick="switchToPanel('weddings')">Weddings</button></li>
-          <li><button onclick="switchToPanel('couples')">Couples</button></li>
-          <li><button onclick="switchToPanel('inquire')">Inquire</button></li>
-        </ul>
-        <p class="footer-copy">&copy; 2024 Angelli Nguyen &nbsp;&middot;&nbsp; Colorado based, available worldwide.</p>
-      </footer>
-    </section>
-
-    <!-- ======== INQUIRE ======== -->
-    <section id="panel-inquire" class="panel" role="tabpanel" aria-label="Wedding inquiry">
-      <div class="panel-top">
-        <div class="section-header">
-          <p class="section-overline">Weddings + Lifestyle</p>
-          <h2 class="section-title">Let's Begin</h2>
-        </div>
-      </div>
-
-      <div class="form-section">
-        <div class="form-intro">
-          <p class="form-intro-text">
-            Every love story deserves to be told beautifully.<br>
-            Tell me about your day and let's create something extraordinary together.
-          </p>
-        </div>
-
-        <form id="inquire-form" novalidate>
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label" for="wf-name">Your Name *</label>
-              <input class="form-input" type="text" id="wf-name" name="name" placeholder="Full name" required>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="wf-partner">Partner's Name *</label>
-              <input class="form-input" type="text" id="wf-partner" name="partner" placeholder="Partner's name" required>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label" for="wf-email">Email *</label>
-              <input class="form-input" type="email" id="wf-email" name="email" placeholder="your@email.com" required>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="wf-phone">Phone</label>
-              <input class="form-input" type="tel" id="wf-phone" name="phone" placeholder="Optional">
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label" for="wf-date">Wedding Date *</label>
-              <input class="form-input" type="date" id="wf-date" name="date" required>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="wf-guests">Guest Count</label>
-              <select class="form-select" id="wf-guests" name="guests">
-                <option value="" disabled selected>Approximate count</option>
-                <option value="intimate">Under 30 &mdash; Intimate</option>
-                <option value="small">30&ndash;75</option>
-                <option value="medium">75&ndash;150</option>
-                <option value="large">150&ndash;250</option>
-                <option value="xlarge">250+</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="wf-venue">Venue / Location *</label>
-            <input class="form-input" type="text" id="wf-venue" name="venue" placeholder="Venue name and city" required>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="wf-service">Services</label>
-            <select class="form-select" id="wf-service" name="service">
-              <option value="" disabled selected>What are you looking for?</option>
-              <option value="wedding">Full Wedding Day</option>
-              <option value="elopement">Elopement</option>
-              <option value="engagement">Engagement Session</option>
-              <option value="portrait">Portrait Session</option>
-              <option value="wedding+engagement">Wedding + Engagement Session</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="wf-vision">Tell Me About Your Vision *</label>
-            <textarea class="form-textarea" id="wf-vision" name="vision" placeholder="The feel you're going for, your venue, what matters most to you on the day&#8230;" required style="height:130px;"></textarea>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="wf-referral">How Did You Hear About Me?</label>
-            <input class="form-input" type="text" id="wf-referral" name="referral" placeholder="Instagram, a friend, Google&#8230;">
-          </div>
-
-          <button type="submit" class="form-submit">Send My Inquiry &nbsp;&#8594;</button>
-          <p class="form-note">I respond to all inquiries within 48 hours.<br>I can't wait to hear about your day.</p>
-        </form>
-
-        <div class="form-success" id="inquire-form-success">
-          <div class="form-success-icon">&#10022;</div>
-          <h3 class="form-success-title">Thank you.</h3>
-          <p class="form-success-text">Your inquiry is in. I'll be in touch within 48 hours<br>and I truly can't wait to hear more about your day.</p>
-        </div>
-      </div>
-
-      <footer>
-        <p class="footer-logo">Angelli Nguyen</p>
-        <ul class="footer-nav">
-          <li><button onclick="switchToPanel('about')">About</button></li>
-          <li><button onclick="switchToPanel('weddings')">Weddings</button></li>
-          <li><button onclick="switchToPanel('couples')">Couples</button></li>
-          <li><button onclick="switchToPanel('portraits')">Portraits</button></li>
-        </ul>
-        <p class="footer-copy">&copy; 2024 Angelli Nguyen &nbsp;&middot;&nbsp; Colorado based, available worldwide.</p>
-      </footer>
-    </section>
-
-    <!-- ======== CONTACT + ABOUT ======== -->
-    <section id="panel-contact" class="panel" role="tabpanel" aria-label="Contact and about">
-      <div class="panel-top no-subnav">
-        <div class="section-header">
-          <p class="section-overline">Contact + About</p>
-          <h2 class="section-title">Get in Touch</h2>
-          <p class="section-subtitle">Colorado based &nbsp;&middot;&nbsp; Available worldwide</p>
-        </div>
-      </div>
-
-      <div class="contact-about-layout">
-        <div class="contact-bio-col">
-          <div class="contact-bio-portrait">
-            <!-- Replace with: <img src="YOUR_CLOUDINARY_URL" alt="Angelli Nguyen"> -->
-            <div class="photo-ph t-portraits" style="height:380px;"></div>
-          </div>
-          <h3 class="contact-bio-name">Angelli Nguyen</h3>
-          <p class="contact-bio-role">Photographer &nbsp;&middot;&nbsp; Director</p>
-          <p class="contact-bio-text">
-            I create imagery that lives somewhere between editorial precision and
-            genuine emotion &mdash; for the brands, couples, and moments that deserve
-            to be remembered exactly as they were.
-          </p>
-          <p class="contact-bio-text">
-            Based in Colorado, I'm available for projects worldwide. Whether
-            it's a fashion campaign, a mountain wedding, or a destination
-            elopement &mdash; I travel for the work.
-          </p>
-          <ul class="contact-social-links">
-            <li><a href="https://instagram.com/angelliproductions" target="_blank" rel="noopener noreferrer">Instagram</a></li>
-            <li><a href="https://angelliproductions.com" target="_blank" rel="noopener noreferrer">Website</a></li>
-          </ul>
-        </div>
-
-        <div class="contact-form-col">
-          <form id="contact-form" novalidate>
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label" for="gf-name">Name *</label>
-                <input class="form-input" type="text" id="gf-name" name="name" placeholder="Your name" required>
+          
+          <!-- Weddings Part 1: Bridal. Meets. Editorial. -->
+          <div class="weddings-section-1">
+            <p class="italic-sub">for the quietly luxurious</p>
+            <h2 class="serif-title">Bridal. Meets. Editorial.</h2>
+            <p class="wedding-meta">Colorado based, available worldwide.<br>Film &amp; Digital</p>
+            
+            <div class="staggered-grid">
+              <div class="grid-col">
+                <div class="grid-img t-wedding r-landscape"></div>
+                <div class="grid-img t-wedding r-portrait-tall"></div>
+                <div class="grid-img t-wedding r-landscape"></div>
               </div>
-              <div class="form-group">
-                <label class="form-label" for="gf-email">Email *</label>
-                <input class="form-input" type="email" id="gf-email" name="email" placeholder="your@email.com" required>
+              <div class="grid-col">
+                 <div class="grid-img t-wedding r-square"></div>
+                 <div class="grid-img t-wedding r-portrait-tall"></div>
+                 <div class="grid-img t-wedding r-square"></div>
+              </div>
+              <div class="grid-col">
+                 <div class="grid-img t-wedding r-landscape"></div>
+                 <div class="grid-img t-wedding r-portrait"></div>
+                 <div class="grid-img t-wedding r-landscape"></div>
               </div>
             </div>
-
-            <div class="form-group">
-              <label class="form-label" for="gf-service">I'm interested in *</label>
-              <select class="form-select" id="gf-service" name="service" required>
-                <option value="" disabled selected>Select a service</option>
-                <option value="wedding">Wedding Photography</option>
-                <option value="engagement">Engagement Session</option>
-                <option value="portrait">Portrait Session</option>
-                <option value="fashion">Fashion Editorial</option>
-                <option value="beauty">Beauty Campaign</option>
-                <option value="commercial">Commercial / Advertising</option>
-                <option value="directing">Film Direction</option>
-                <option value="other">Other / Just Saying Hi</option>
-              </select>
+          </div>
+          
+          <!-- Weddings Part 2: Split screen -->
+          <div class="weddings-section-2">
+            <div class="split-screen">
+              <div class="split-left">
+                <div class="grid-img t-wedding r-portrait-tall" style="height: 100%;"></div>
+              </div>
+              <div class="split-right">
+                <h2 class="serif-title-left">Romance, held in time.</h2>
+                <p class="body-text">Your day carries its own atmosphere, shaped by light, movement, and emotion. Each moment unfolds with a quiet intention, creating something deeply personal and visually striking.</p>
+                <p class="body-text">My approach is built around honoring that energy, capturing it with precision and restraint so the final images feel both elevated and effortlessly true.</p>
+                <a href="#" class="btn-link">MY APPROACH &rarr;</a>
+              </div>
             </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
 
-            <div class="form-group">
-              <label class="form-label" for="gf-message">Message *</label>
-              <textarea class="form-textarea" id="gf-message" name="message" placeholder="Tell me what you have in mind&#8230;" required style="height:130px;"></textarea>
-            </div>
-
-            <button type="submit" class="form-submit">Send Message &nbsp;&#8594;</button>
-            <p class="form-note">Responses within 48 hours.</p>
-          </form>
-
-          <div class="form-success" id="contact-form-success">
-            <div class="form-success-icon">&#10022;</div>
-            <h3 class="form-success-title">Message received.</h3>
-            <p class="form-success-text">Thank you for reaching out.<br>I'll be in touch within 48 hours.</p>
+    <!-- Contact + About -->
+    <div class="accordion-item" id="acc-contact">
+      <button class="accordion-tab">Contact + About</button>
+      <div class="accordion-content">
+        <div class="accordion-inner">
+          <div class="blank-template">
+            <h2 class="serif-title-left" style="margin-bottom: 20px;">Contact + About</h2>
+            <p class="body-text">This section is ready for your contact information, bio, and inquiry form.</p>
+            <div class="placeholder-box"></div>
           </div>
         </div>
       </div>
-
-      <footer>
-        <p class="footer-logo">Angelli Nguyen</p>
-        <ul class="footer-nav">
-          <li><button onclick="switchToSection('commercial','fashion')">Commercial</button></li>
-          <li><button onclick="switchToSection('weddings','weddings-home')">Weddings</button></li>
-          <li><button onclick="switchToPanel('about')">About</button></li>
-          <li><button onclick="switchToPanel('inquire')">Inquire</button></li>
-        </ul>
-        <p class="footer-copy">&copy; 2024 Angelli Nguyen &nbsp;&middot;&nbsp; Colorado based, available worldwide.</p>
-      </footer>
-    </section>
-
-  </main>
-
-  <!-- ====================================================
-       LIGHTBOX
-       ==================================================== -->
-  <div id="lightbox" role="dialog" aria-modal="true" aria-label="Image lightbox"
-       onclick="handleLightboxBackdropClick(event)">
-    <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close lightbox">&#10005;</button>
-    <button class="lightbox-prev" onclick="navigateLightbox(-1)" aria-label="Previous image">&#8592;</button>
-    <button class="lightbox-next" onclick="navigateLightbox(1)" aria-label="Next image">&#8594;</button>
-    <div id="lightbox-inner" onclick="event.stopPropagation()">
-      <img id="lightbox-img" src="" alt="">
-      <div id="lightbox-ph" class="photo-ph"></div>
     </div>
-    <span class="lightbox-counter" id="lightbox-counter" aria-live="polite"></span>
+
   </div>
 
-  <!-- ====================================================
-       COLLECTION MODAL
-       ==================================================== -->
-  <div id="collection-modal" role="dialog" aria-modal="true" aria-label="Wedding collection gallery">
-    <div class="collection-modal-header">
-      <div class="collection-modal-info">
-        <h2 class="collection-modal-venue" id="collection-modal-venue"></h2>
-        <p class="collection-modal-location" id="collection-modal-location"></p>
-      </div>
-      <button class="collection-modal-close" onclick="closeCollection()">&#8592;&nbsp; Back to Weddings</button>
-    </div>
-    <div id="collection-modal-gallery" class="masonry-grid"></div>
-  </div>
+</div>
 
-  <script src="main.js"></script>
+<script src="main.js"></script>
 </body>
 </html>
