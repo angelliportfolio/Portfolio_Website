@@ -103,7 +103,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const tile = document.createElement('figure');
     tile.className = 'cm-project';
 
-    const meta = [project.client, project.year].filter(Boolean).join(' · ');
+    // Don't repeat the client under a title that already is the client name.
+    const client = (project.client || '').trim();
+    const sameAsTitle = client.toLowerCase() === (project.title || '').trim().toLowerCase();
+    const meta = [sameAsTitle ? '' : client, project.year].filter(Boolean).join(' · ');
     tile.innerHTML = `
       <div class="cm-stack">
         <img class="is-shown" loading="lazy" decoding="async" src="${shots[0].src}" alt="${shots[0].alt}">
