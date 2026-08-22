@@ -15,3 +15,6 @@ curation-beauty.html
 
 # Curation tool backups of gallery-data.js
 .gallery-backups/
+
+# Picker thumbnails — rebuilt from the drive by build_thumbs.py, never shipped.
+images/_thumbs/

@@ -7,38 +7,52 @@
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:'Be Vietnam Pro',sans-serif;background:#f6f4f1;color:#1a1a1a;padding-bottom:120px}
-  header{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid #e4dfd8;
-         padding:18px 26px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
-  h1{font-size:15px;letter-spacing:.18em;text-transform:uppercase;font-weight:600}
-  .hint{font-size:12px;color:#888;line-height:1.6;flex:1;min-width:260px}
+  body{font-family:'Be Vietnam Pro',sans-serif;background:#f6f4f1;color:#1a1a1a;padding-bottom:96px}
+  header{position:sticky;top:0;z-index:60;background:#fff;border-bottom:1px solid #e4dfd8;
+         padding:16px 24px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  h1{font-size:14px;letter-spacing:.2em;text-transform:uppercase;font-weight:600}
+  .hint{font-size:12px;color:#7a7a7a;line-height:1.6;flex:1;min-width:280px}
+  .hint b{color:#1a1a1a;font-weight:500}
   button{font-family:inherit;cursor:pointer;border:none;border-radius:2px}
-  .save{background:#1a1a1a;color:#fff;padding:12px 26px;font-size:11px;letter-spacing:.2em;text-transform:uppercase}
+  .save{background:#1a1a1a;color:#fff;padding:11px 24px;font-size:11px;letter-spacing:.2em;text-transform:uppercase}
   .save:disabled{opacity:.4;cursor:default}
-  #status{font-size:12px;color:#666;min-width:150px}
-  .proj{background:#fff;border:1px solid #e4dfd8;margin:22px 26px;border-radius:3px}
-  .phead{display:flex;align-items:center;gap:14px;padding:14px 18px;border-bottom:1px solid #efeae3;flex-wrap:wrap}
-  .phead input[type=text]{font-family:inherit;font-size:14px;font-weight:500;border:1px solid transparent;
-        background:#f6f4f1;padding:7px 10px;border-radius:2px;width:190px}
-  .phead select{font-family:inherit;font-size:12px;padding:7px 9px;border:1px solid #ddd6cd;background:#fff;border-radius:2px}
-  .count{font-size:11px;color:#999;letter-spacing:.1em;margin-left:auto}
-  .star{display:flex;align-items:center;gap:7px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#666}
+  .ghost{background:#efeae3;color:#444;padding:7px 12px;font-size:11px;letter-spacing:.08em}
+  #status{font-size:12px;color:#666;min-width:160px}
+
+  .proj{background:#fff;border:1px solid #e4dfd8;margin:20px 24px;border-radius:3px}
+  .phead{display:flex;align-items:center;gap:10px;padding:13px 16px;border-bottom:1px solid #efeae3;flex-wrap:wrap}
+  .phead input[type=text]{font-family:inherit;font-size:14px;font-weight:500;border:1px solid #e8e2da;
+        background:#fbfaf8;padding:7px 9px;border-radius:2px;width:180px}
+  .phead select{font-family:inherit;font-size:12px;padding:7px 8px;border:1px solid #ddd6cd;background:#fff;border-radius:2px}
+  .star{display:flex;align-items:center;gap:6px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#555}
   .star input{width:16px;height:16px;accent-color:#1a1a1a}
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:10px;padding:16px 18px}
+  .count{font-size:11px;color:#999;letter-spacing:.08em;margin-left:auto}
+  .move{display:flex;gap:4px}
+
+  .chosen{padding:12px 16px;background:#fbfaf8;border-bottom:1px solid #efeae3}
+  .chosen h4{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#999;margin-bottom:9px}
+  .strip{display:flex;gap:8px;flex-wrap:wrap;min-height:74px}
+  .strip .s{position:relative;width:58px;height:73px;border-radius:2px;overflow:hidden;cursor:grab;
+        background:#eee;border:1px solid #e2dcd4}
+  .strip .s img{width:100%;height:100%;object-fit:cover;display:block}
+  .strip .s.drag{opacity:.35}
+  .strip .s .n{position:absolute;top:0;left:0;background:#1a1a1a;color:#fff;font-size:9px;
+        padding:2px 5px;line-height:1.3}
+  .strip .s.first .n{background:#b8873b}
+  .strip .s .x{position:absolute;bottom:0;right:0;background:rgba(0,0,0,.6);color:#fff;
+        font-size:10px;padding:1px 5px}
+  .strip .empty{font-size:12px;color:#bbb;padding:24px 0}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:8px;padding:14px 16px}
   .cell{position:relative;cursor:pointer;border-radius:2px;overflow:hidden;background:#eee;aspect-ratio:4/5}
-  .cell img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity .2s,filter .2s}
-  .cell.off img{opacity:.28;filter:grayscale(1)}
-  .cell .tick{position:absolute;top:6px;left:6px;width:19px;height:19px;border-radius:50%;
-       background:#1a1a1a;color:#fff;font-size:11px;line-height:19px;text-align:center}
-  .cell.off .tick{background:rgba(255,255,255,.85);color:#bbb}
-  .cell .mk{position:absolute;bottom:6px;left:6px;right:6px;font-size:9px;letter-spacing:.12em;
-       text-transform:uppercase;background:rgba(0,0,0,.62);color:#fff;padding:4px 0;text-align:center;
-       opacity:0;transition:opacity .2s}
-  .cell:hover .mk{opacity:1}
-  .cell.cover{outline:3px solid #1a1a1a;outline-offset:-3px}
-  .cell.cover .mk{opacity:1;background:#1a1a1a}
+  .cell img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity .15s,filter .15s}
+  .cell:not(.on) img{opacity:.42;filter:grayscale(.85)}
+  .cell.on{outline:2px solid #1a1a1a;outline-offset:-2px}
+  .cell .n{position:absolute;top:0;left:0;background:#1a1a1a;color:#fff;font-size:10px;padding:2px 6px}
+  .cell.first .n{background:#b8873b}
+
   .bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e4dfd8;
-       padding:14px 26px;display:flex;gap:16px;align-items:center;z-index:50}
+       padding:13px 24px;display:flex;gap:14px;align-items:center;z-index:60}
   .tot{font-size:12px;color:#666}
 </style>
 </head>
@@ -46,8 +60,9 @@
 
 <header>
   <h1>Curate</h1>
-  <p class="hint">Click a photo to include or exclude it. Hover and hit <strong>Cover</strong> to make it the thumbnail.
-     Tick <strong>Selected</strong> to put a project on the front page. Then Save — it writes straight to the live site.</p>
+  <p class="hint"><b>Click a photo</b> to add it — it joins the end of the order.
+     Click again to remove. <b>Drag the strip</b> to reorder; <b>first is the cover</b> (gold).
+     <b>Selected</b> puts a project on the front page. <b>▲▼</b> reorders projects.</p>
   <span id="status"></span>
   <button class="save" id="save">Save to site</button>
 </header>
@@ -60,49 +75,83 @@
   <button class="save" id="save2">Save to site</button>
 </div>
 
-<script src="gallery-data.js"></script>
 <script>
-const CATS = ['campaigns','product','beauty','fashion'];
-// Deep copy so editing here never mutates the loaded config.
-const data = JSON.parse(JSON.stringify(COMMERCIAL_PROJECTS)).map(p => ({
-  title:p.title, client:p.client||'', year:p.year||'', category:p.category,
-  featured:!!p.featured,
-  images:p.images.map((src,i) => ({src, on:true, cover:i===0}))
-}));
+let data = [];
 
-const app = document.getElementById('app');
+async function boot(){
+  const man = await (await fetch('curate-manifest.json?t=' + Date.now())).json();
+  // Existing choices, so opening the tool doesn't wipe what's already live.
+  let live = [];
+  try { live = await (await fetch('curate-state.json?t=' + Date.now())).json(); } catch(e){}
+  const byslug = {};
+  live.forEach(p => byslug[p.slug] = p);
+
+  data = man.map(p => {
+    const prev = byslug[p.slug] || {};
+    const chosen = prev.chosen || [];
+    return {
+      slug:p.slug, title:prev.title ?? p.title, client:prev.client ?? p.client,
+      year:prev.year ?? '', category:prev.category ?? p.category,
+      featured: prev.featured ?? false,
+      photos:p.photos,
+      chosen: chosen.filter(i => i < p.photos.length)
+    };
+  });
+  // Keep saved project order first.
+  const ord = {}; live.forEach((p,i)=>ord[p.slug]=i);
+  data.sort((a,b)=>(ord[a.slug]??999)-(ord[b.slug]??999));
+  render();
+}
+
+const CATS=['campaigns','product','beauty','fashion'];
+const app=document.getElementById('app');
 
 function totals(){
-  const ph = data.filter(p=>p.images.some(i=>i.on)).length;
-  const im = data.reduce((n,p)=>n+p.images.filter(i=>i.on).length,0);
-  const ft = data.filter(p=>p.featured && p.images.some(i=>i.on)).length;
+  const ps=data.filter(p=>p.chosen.length);
   document.getElementById('tot').textContent =
-    `${ph} projects · ${im} photos · ${ft} on SELECTED`;
+    `${ps.length} projects · ${ps.reduce((n,p)=>n+p.chosen.length,0)} photos · `+
+    `${ps.filter(p=>p.featured).length} on SELECTED`;
 }
 
 function render(){
   app.innerHTML='';
   data.forEach((p,pi)=>{
     const el=document.createElement('div'); el.className='proj';
-    const on=p.images.filter(i=>i.on).length;
+    const strip = p.chosen.length
+      ? p.chosen.map((idx,n)=>`
+          <div class="s ${n===0?'first':''}" draggable="true" data-p="${pi}" data-n="${n}">
+            <img src="${p.photos[idx].thumb}" alt="">
+            <span class="n">${n+1}${n===0?' ★':''}</span>
+            <span class="x" data-rm="1">✕</span>
+          </div>`).join('')
+      : '<div class="empty">No photos chosen yet — click any below.</div>';
+
     el.innerHTML=`
       <div class="phead">
+        <span class="move">
+          <button class="ghost" data-mv="-1" data-p="${pi}">▲</button>
+          <button class="ghost" data-mv="1" data-p="${pi}">▼</button>
+        </span>
         <input type="text" value="${p.title}" data-f="title" data-p="${pi}">
-        <input type="text" value="${p.client}" placeholder="client" data-f="client" data-p="${pi}" style="width:150px">
-        <input type="text" value="${p.year}" placeholder="year" data-f="year" data-p="${pi}" style="width:70px">
+        <input type="text" value="${p.client}" placeholder="client" data-f="client" data-p="${pi}" style="width:140px">
+        <input type="text" value="${p.year}" placeholder="year" data-f="year" data-p="${pi}" style="width:64px">
         <select data-f="category" data-p="${pi}">
           ${CATS.map(c=>`<option value="${c}" ${c===p.category?'selected':''}>${c}</option>`).join('')}
         </select>
         <label class="star"><input type="checkbox" data-f="featured" data-p="${pi}" ${p.featured?'checked':''}> Selected</label>
-        <span class="count">${on} / ${p.images.length}</span>
+        <span class="count">${p.chosen.length} chosen / ${p.photos.length} available</span>
+      </div>
+      <div class="chosen">
+        <h4>On the site — in this order</h4>
+        <div class="strip" data-p="${pi}">${strip}</div>
       </div>
       <div class="grid">
-        ${p.images.map((im,ii)=>`
-          <div class="cell ${im.on?'':'off'} ${im.cover?'cover':''}" data-p="${pi}" data-i="${ii}">
-            <img loading="lazy" src="${im.src}" alt="">
-            <span class="tick">${im.on?'✓':''}</span>
-            <span class="mk" data-cover="1">${im.cover?'Cover':'Set cover'}</span>
-          </div>`).join('')}
+        ${p.photos.map((ph,ii)=>{
+          const n=p.chosen.indexOf(ii);
+          return `<div class="cell ${n>=0?'on':''} ${n===0?'first':''}" data-p="${pi}" data-i="${ii}">
+            <img loading="lazy" src="${ph.thumb}" alt="">
+            ${n>=0?`<span class="n">${n+1}${n===0?' ★':''}</span>`:''}
+          </div>`;}).join('')}
       </div>`;
     app.appendChild(el);
   });
@@ -110,49 +159,72 @@ function render(){
 }
 
 app.addEventListener('click', e=>{
+  const mv=e.target.dataset.mv;
+  if(mv){ const p=+e.target.dataset.p, t=p+(+mv);
+    if(t>=0&&t<data.length){ const [x]=data.splice(p,1); data.splice(t,0,x); render(); }
+    return; }
+  if(e.target.dataset.rm){
+    const s=e.target.closest('.s'); const p=+s.dataset.p, n=+s.dataset.n;
+    data[p].chosen.splice(n,1); render(); return; }
   const cell=e.target.closest('.cell'); if(!cell) return;
-  const p=+cell.dataset.p, i=+cell.dataset.i;
-  if(e.target.dataset.cover){
-    data[p].images.forEach(im=>im.cover=false);
-    data[p].images[i].cover=true;
-    data[p].images[i].on=true;             // a cover must be included
-  } else {
-    const im=data[p].images[i];
-    if(im.cover && im.on) return;          // don't switch off the cover
-    im.on=!im.on;
-  }
+  const p=+cell.dataset.p, i=+cell.dataset.i, arr=data[p].chosen;
+  const at=arr.indexOf(i);
+  if(at>=0) arr.splice(at,1); else arr.push(i);
   render();
 });
 
 app.addEventListener('input', e=>{
   const f=e.target.dataset.f; if(!f) return;
   const p=+e.target.dataset.p;
-  data[p][f] = e.target.type==='checkbox' ? e.target.checked : e.target.value;
+  data[p][f]= e.target.type==='checkbox' ? e.target.checked : e.target.value;
   totals();
+});
+
+// Drag to reorder inside a project's strip.
+let drag=null;
+app.addEventListener('dragstart',e=>{
+  const s=e.target.closest('.s'); if(!s) return;
+  drag={p:+s.dataset.p,n:+s.dataset.n}; s.classList.add('drag');
+  e.dataTransfer.effectAllowed='move';
+});
+app.addEventListener('dragend',e=>{
+  const s=e.target.closest('.s'); if(s) s.classList.remove('drag'); drag=null;
+});
+app.addEventListener('dragover',e=>{
+  const s=e.target.closest('.s'); if(!s||!drag||+s.dataset.p!==drag.p) return;
+  e.preventDefault(); e.dataTransfer.dropEffect='move';
+});
+app.addEventListener('drop',e=>{
+  const s=e.target.closest('.s'); if(!s||!drag||+s.dataset.p!==drag.p) return;
+  e.preventDefault();
+  const arr=data[drag.p].chosen, to=+s.dataset.n;
+  const [x]=arr.splice(drag.n,1); arr.splice(to,0,x);
+  drag=null; render();
 });
 
 async function save(){
   const btns=[document.getElementById('save'),document.getElementById('save2')];
   btns.forEach(b=>b.disabled=true);
-  const st=document.getElementById('status'); st.textContent='Saving…';
-  const out=data.map(p=>{
-    const imgs=p.images.slice().sort((a,b)=>(b.cover?1:0)-(a.cover?1:0));
-    return {title:p.title, client:p.client, year:p.year, category:p.category,
-            featured:p.featured, images:imgs.filter(i=>i.on).map(i=>i.src)};
-  }).filter(p=>p.images.length);
+  const st=document.getElementById('status');
+  st.textContent='Saving… (building full-size images)';
+  const out=data.map(p=>({
+    slug:p.slug,title:p.title,client:p.client,year:p.year,category:p.category,
+    featured:p.featured,chosen:p.chosen,
+    images:p.chosen.map(i=>({src:p.photos[i].src, web:p.photos[i].web}))
+  }));
   try{
     const r=await fetch('/save',{method:'POST',headers:{'Content-Type':'application/json'},
                                 body:JSON.stringify(out)});
     const t=await r.text();
     if(!r.ok) throw new Error(t);
-    st.textContent='Saved — reload the site to see it.';
+    st.textContent=t;
   }catch(err){ st.textContent='Failed: '+err.message; }
   btns.forEach(b=>b.disabled=false);
 }
 document.getElementById('save').onclick=save;
 document.getElementById('save2').onclick=save;
 
-render();
+boot();
 </script>
 </body>
 </html>

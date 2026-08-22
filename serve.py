@@ -6,7 +6,7 @@ POST /save from curate.html, which rewrites gallery-data.js in place.
 
     python3 serve.py        # then open http://localhost:8765
 """
-import http.server, socketserver, json, io, os, shutil, datetime
+import http.server, socketserver, json, io, os, shutil, datetime, subprocess
 
 PORT = 8765
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -80,20 +80,42 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             self.send_error(404); return
         try:
             n = int(self.headers.get('Content-Length', 0))
-            projects = json.loads(self.rfile.read(n).decode('utf-8'))
-            if not isinstance(projects, list) or not projects:
-                raise ValueError('no projects supplied')
+            payload = json.loads(self.rfile.read(n).decode('utf-8'))
+            if not isinstance(payload, list):
+                raise ValueError('bad payload')
 
-            missing = []
-            for p in projects:
-                if not p.get('images'):
-                    raise ValueError('project "%s" has no photos' % p.get('title'))
-                for s in p['images']:
-                    if not os.path.exists(os.path.join(ROOT, s)):
-                        missing.append(s)
+            live = [p for p in payload if p.get('images')]
+            if not live:
+                raise ValueError('nothing chosen — pick at least one photo')
+
+            # Build the full-size web copy for any chosen photo that lacks one.
+            built, missing = 0, []
+            for p in live:
+                for im in p['images']:
+                    web = os.path.join(ROOT, im['web'])
+                    if os.path.exists(web):
+                        continue
+                    src = im['src']
+                    if not os.path.exists(src):
+                        missing.append(os.path.basename(src)); continue
+                    os.makedirs(os.path.dirname(web), exist_ok=True)
+                    r = subprocess.run(['sips', '-s', 'format', 'jpeg',
+                                        '-s', 'formatOptions', '74',
+                                        '-Z', '2200', src, '--out', web],
+                                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                    if r.returncode == 0 and os.path.exists(web):
+                        built += 1
+                    else:
+                        missing.append(os.path.basename(src))
             if missing:
-                raise ValueError('%d image path(s) not found, e.g. %s'
-                                 % (len(missing), missing[0]))
+                raise ValueError('could not build %d image(s) — is the drive connected? '
+                                 'first: %s' % (len(missing), missing[0]))
+
+            projects = [{'title': p.get('title'), 'client': p.get('client'),
+                         'year': p.get('year'), 'category': p.get('category'),
+                         'featured': p.get('featured'),
+                         'images': [im['web'] for im in p['images']]}
+                        for p in live]
 
             target = os.path.join(ROOT, 'gallery-data.js')
             stamp = datetime.datetime.now().strftime('%Y%m%d-%H%M%S')
@@ -103,15 +125,25 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 shutil.copy2(target, os.path.join(backup, 'gallery-data.%s.js' % stamp))
 
             io.open(target, 'w', encoding='utf-8').write(render(projects))
+
+            # Remember the picker's own state (selection + order) for next open.
+            state = [{'slug': p.get('slug'), 'title': p.get('title'),
+                      'client': p.get('client'), 'year': p.get('year'),
+                      'category': p.get('category'), 'featured': p.get('featured'),
+                      'chosen': p.get('chosen', [])} for p in payload]
+            io.open(os.path.join(ROOT, 'curate-state.json'), 'w',
+                    encoding='utf-8').write(json.dumps(state, indent=1))
+
             total = sum(len(p['images']) for p in projects)
-            msg = 'Saved %d projects, %d photos.' % (len(projects), total)
+            msg = 'Saved %d projects, %d photos%s.' % (
+                len(projects), total, ' (%d newly built)' % built if built else '')
             body = msg.encode()
             self.send_response(200)
             self.send_header('Content-Type', 'text/plain; charset=utf-8')
             self.send_header('Content-Length', str(len(body)))
             self.end_headers()
             self.wfile.write(body)
-            print('[save]', msg, '(backup: %s)' % stamp)
+            print('[save]', msg)
         except Exception as e:
             body = str(e).encode()
             self.send_response(400)
