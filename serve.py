@@ -6,7 +6,8 @@ POST /save from curate.html, which rewrites gallery-data.js in place.
 
     python3 serve.py        # then open http://localhost:8765
 """
-import http.server, socketserver, json, io, os, shutil, datetime, subprocess
+import http.server, socketserver, json, io, os, shutil, datetime
+import imgtools
 
 PORT = 8765
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -99,13 +100,12 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                     if not os.path.exists(src):
                         missing.append(os.path.basename(src)); continue
                     os.makedirs(os.path.dirname(web), exist_ok=True)
-                    r = subprocess.run(['sips', '-s', 'format', 'jpeg',
-                                        '-s', 'formatOptions', '74',
-                                        '-Z', '2200', src, '--out', web],
-                                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-                    if r.returncode == 0 and os.path.exists(web):
+                    try:
+                        # Converts through the embedded profile to sRGB — wide-gamut
+                        # files render yellow in a browser otherwise.
+                        imgtools.save_web(src, web)
                         built += 1
-                    else:
+                    except Exception:
                         missing.append(os.path.basename(src))
             if missing:
                 raise ValueError('could not build %d image(s) — is the drive connected? '

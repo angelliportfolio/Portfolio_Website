@@ -1,83 +1,96 @@
 #!/usr/bin/env python3
-"""Build the picker manifest + small thumbnails for every final photo.
+"""Build the picker manifest + thumbnails for every final photo.
 
-Thumbs are only used by curate.html and are gitignored. The full-size web
-copies under images/commercial/ are generated on save, for chosen photos only,
-so the repo only ever carries what's actually on the site.
+Every shoot folder in the content library becomes a project in the picker,
+whether or not it's currently on the site — a project with no photos chosen
+simply doesn't appear. That's how you add a new project: pick photos from a
+folder that has none yet.
+
+Thumbnails are gitignored; full-size web copies are built on save.
 """
-from PIL import Image, ImageOps
-import glob, json, os
+import glob, json, os, sys
+import imgtools
 
-V    = '/Volumes/Samsung_T7_4TB'
-C    = V + '/Angelli Social/content'
-ROOT = os.path.dirname(os.path.abspath(__file__))
-THUMB_DIR = os.path.join(ROOT, 'images/_thumbs')
+V     = '/Volumes/Samsung_T7_4TB'
+C     = V + '/Angelli Social/content'
+ROOT  = os.path.dirname(os.path.abspath(__file__))
+THUMB = os.path.join(ROOT, 'images/_thumbs')
+IMG   = ('.jpg', '.jpeg', '.png', '.tif', '.tiff')
 
-# slug -> (title, client, category, [source globs])
-PROJECTS = [
- ('don-kaka','Don Kaka','Don Kaka','fashion',
-   [V+'/26.06.09_Don_Kaka_Campaign/05. EXPORTS/HIGH RES/JPEG/*']),
- ('charlotte-tilbury','Charlotte Tilbury','Charlotte Tilbury','campaigns',[C+'/charlotte_tilbury_campaign/**/*']),
- ('tessi','Tessi','Tessi','campaigns',[C+'/tessi/**/*']),
- ('summer-fridays','Summer Fridays','Summer Fridays','campaigns',[C+'/leona_vanessa/**/*']),
- ('tatcha','Tatcha','Tatcha','campaigns',[C+'/alessandra_kiara/**/*']),
- ('product','Product','','product',[C+'/product/*']),
- ('nail-editorial','Nail Editorial','','beauty',[C+'/nail_shoot/**/*']),
- ('acacia','Acacia','','beauty',[C+'/acacia_mcbride/**/*']),
- ('courtney','Courtney','','beauty',[C+'/courtney_jones/**/*']),
- ('alicia','Alicia','','beauty',[C+'/alicia_skincare/**/*']),
- ('lucas','Lucas','','beauty',[C+'/lucas_skincare/**/*']),
- ('chase','Chase','','beauty',[C+'/chase_vanderpol/**/*']),
- ('cameron','Cameron','','beauty',[C+'/cameron_jones/**/*']),
- ('destiny','Destiny','','beauty',[C+'/destiny/**/*']),
- ('chloe','Chloe','','beauty',[C+'/chloe_helina/**/*']),
- ('tabatha','Tabatha','','beauty',[C+'/tabatha/**/*']),
- ('o-models','O Models','','beauty',[C+'/nicole_o_models/**/*', C+'/liliana_o_models/**/*']),
- ('jordan','Jordan','','fashion',[C+'/jordan/**/*']),
- ('hope','Hope','','fashion',[C+'/hope_elizabeth/**/*']),
- ('isabel','Isabel','','fashion',[C+'/isabel_cameron/**/*']),
- ('serena','Serena','','fashion',[C+'/serena_morizio/**/*']),
-]
+# Nicer titles + categories for folders we've already placed.
+KNOWN = {
+ 'charlotte_tilbury_campaign': ('charlotte-tilbury','Charlotte Tilbury','Charlotte Tilbury','campaigns'),
+ 'tessi':            ('tessi','Tessi','Tessi','campaigns'),
+ 'leona_vanessa':    ('summer-fridays','Summer Fridays','Summer Fridays','campaigns'),
+ 'alessandra_kiara': ('tatcha','Tatcha','Tatcha','campaigns'),
+ 'don_kaka':         ('don-kaka','Don Kaka','Don Kaka','fashion'),
+ 'product':          ('product','Product','','product'),
+ 'nail_shoot':       ('nail-editorial','Nail Editorial','','beauty'),
+ 'acacia_mcbride':   ('acacia','Acacia','','beauty'),
+ 'courtney_jones':   ('courtney','Courtney','','beauty'),
+ 'alicia_skincare':  ('alicia','Alicia','','beauty'),
+ 'lucas_skincare':   ('lucas','Lucas','','beauty'),
+ 'chase_vanderpol':  ('chase','Chase','','beauty'),
+ 'cameron_jones':    ('cameron','Cameron','','beauty'),
+ 'destiny':          ('destiny','Destiny','','beauty'),
+ 'chloe_helina':     ('chloe','Chloe','','beauty'),
+ 'tabatha':          ('tabatha','Tabatha','','beauty'),
+ 'nicole_o_models':  ('o-models','O Models','','beauty'),
+ 'jordan':           ('jordan','Jordan','','fashion'),
+ 'hope_elizabeth':   ('hope','Hope','','fashion'),
+ 'isabel_cameron':   ('isabel','Isabel','','fashion'),
+ 'serena_morizio':   ('serena','Serena','','fashion'),
+ 'ally_kendricks':   ('ally','Ally','','fashion'),
+}
+# Folders folded into another project rather than standing alone.
+MERGE = {'liliana_o_models': 'nicole_o_models'}
+# Extra sources beyond the content folder.
+EXTRA = {'don_kaka': [V + '/26.06.09_Don_Kaka_Campaign/05. EXPORTS/HIGH RES/JPEG/*']}
 
-IMG = ('.jpg', '.jpeg', '.png', '.tif', '.tiff')
-# AI-generated output found in the product folder — never offer it as a photo.
-BAD_PREFIX = ('hf_', 'Gemini_Generated')
+def is_ai(name):
+    """Generator output, not photography — surfaced but flagged and off by default."""
+    return name.startswith('hf_') or name.startswith('Gemini_Generated')
 
-def sources(globs):
+def gather(globs):
     seen, out = set(), []
     for g in globs:
         for f in sorted(glob.glob(g, recursive=True)):
             if not f.lower().endswith(IMG): continue
             b = os.path.basename(f)
-            if b.startswith(BAD_PREFIX): continue
-            key = (b.lower(), os.path.getsize(f))     # drop cross-folder duplicates
+            key = (b.lower(), os.path.getsize(f))
             if key in seen: continue
             seen.add(key); out.append(f)
     return out
 
+folders = sorted(d for d in os.listdir(C) if os.path.isdir(os.path.join(C, d)))
 manifest = []
-for slug, title, client, cat, globs in PROJECTS:
-    files = sources(globs)
-    if not files:
-        print('!! no files for', slug); continue
-    os.makedirs(os.path.join(THUMB_DIR, slug), exist_ok=True)
+for folder in folders:
+    if folder in MERGE: continue
+    slug, title, client, cat = KNOWN.get(
+        folder, (folder.replace('_', '-'), folder.replace('_', ' ').title(), '', 'beauty'))
+    globs = [os.path.join(C, folder, '**', '*')]
+    globs += [os.path.join(C, m, '**', '*') for m, t in MERGE.items() if t == folder]
+    globs += EXTRA.get(folder, [])
+    files = gather(globs)
+    if not files: continue
+
+    os.makedirs(os.path.join(THUMB, slug), exist_ok=True)
     photos = []
     for i, src in enumerate(files, 1):
-        name = '%s-%03d.jpg' % (slug, i)
+        name  = '%s-%03d.jpg' % (slug, i)
         thumb = 'images/_thumbs/%s/%s' % (slug, name)
         full  = os.path.join(ROOT, thumb)
         if not os.path.exists(full):
             try:
-                im = ImageOps.exif_transpose(Image.open(src)).convert('RGB')
-                im.thumbnail((520, 520))
-                im.save(full, 'JPEG', quality=68)
+                imgtools.save_thumb(src, full)
             except Exception as e:
-                print('skip', src, e); continue
-        photos.append({'src': src, 'thumb': thumb,
+                print('skip', os.path.basename(src), e); continue
+        photos.append({'src': src, 'thumb': thumb, 'ai': is_ai(os.path.basename(src)),
                        'web': 'images/commercial/%s/%s' % (slug, name)})
+    ai = sum(1 for p in photos if p['ai'])
     manifest.append({'slug': slug, 'title': title, 'client': client,
                      'category': cat, 'photos': photos})
-    print('%-20s %4d photos' % (slug, len(photos)))
+    print('%-20s %4d photos%s' % (slug, len(photos), '  (%d AI-flagged)' % ai if ai else ''))
 
 json.dump(manifest, open(os.path.join(ROOT, 'curate-manifest.json'), 'w'), indent=1)
-print('\ntotal photos:', sum(len(p['photos']) for p in manifest))
+print('\nprojects:', len(manifest), ' photos:', sum(len(p['photos']) for p in manifest))

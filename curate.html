@@ -50,6 +50,13 @@
   .cell.on{outline:2px solid #1a1a1a;outline-offset:-2px}
   .cell .n{position:absolute;top:0;left:0;background:#1a1a1a;color:#fff;font-size:10px;padding:2px 6px}
   .cell.first .n{background:#b8873b}
+  .cell .ai{position:absolute;bottom:0;left:0;right:0;background:rgba(190,60,40,.9);color:#fff;
+        font-size:9px;letter-spacing:.1em;text-align:center;padding:2px 0}
+  .proj.unused{opacity:.62}
+  .proj.unused .phead{background:#faf8f5}
+  .newtag{font-size:9px;letter-spacing:.14em;text-transform:uppercase;background:#1a1a1a;
+        color:#fff;padding:3px 7px;border-radius:2px}
+  .filter{display:flex;align-items:center;gap:6px;font-size:11px;color:#666}
 
   .bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e4dfd8;
        padding:13px 24px;display:flex;gap:14px;align-items:center;z-index:60}
@@ -62,7 +69,9 @@
   <h1>Curate</h1>
   <p class="hint"><b>Click a photo</b> to add it — it joins the end of the order.
      Click again to remove. <b>Drag the strip</b> to reorder; <b>first is the cover</b> (gold).
-     <b>Selected</b> puts a project on the front page. <b>▲▼</b> reorders projects.</p>
+     <b>Selected</b> puts a project on the front page. <b>▲▼</b> reorders projects.<br>
+     Projects with nothing chosen are dimmed — pick any photo to add them to the site.
+     Frames marked <b style="color:#be3c28">AI</b> are generator output, not photographs.</p>
   <span id="status"></span>
   <button class="save" id="save">Save to site</button>
 </header>
@@ -99,7 +108,9 @@ async function boot(){
   });
   // Keep saved project order first.
   const ord = {}; live.forEach((p,i)=>ord[p.slug]=i);
-  data.sort((a,b)=>(ord[a.slug]??999)-(ord[b.slug]??999));
+  // Saved order first; folders not yet used drop to the bottom.
+  data.sort((a,b)=>(ord[a.slug] ?? 900+ (a.chosen.length?0:50))
+                 - (ord[b.slug] ?? 900+ (b.chosen.length?0:50)));
   render();
 }
 
@@ -116,7 +127,8 @@ function totals(){
 function render(){
   app.innerHTML='';
   data.forEach((p,pi)=>{
-    const el=document.createElement('div'); el.className='proj';
+    const el=document.createElement('div');
+    el.className='proj'+(p.chosen.length?'':' unused');
     const strip = p.chosen.length
       ? p.chosen.map((idx,n)=>`
           <div class="s ${n===0?'first':''}" draggable="true" data-p="${pi}" data-n="${n}">
@@ -139,7 +151,7 @@ function render(){
           ${CATS.map(c=>`<option value="${c}" ${c===p.category?'selected':''}>${c}</option>`).join('')}
         </select>
         <label class="star"><input type="checkbox" data-f="featured" data-p="${pi}" ${p.featured?'checked':''}> Selected</label>
-        <span class="count">${p.chosen.length} chosen / ${p.photos.length} available</span>
+        <span class="count">${p.chosen.length ? '' : '<span class=\'newtag\'>not on site</span> '}${p.chosen.length} chosen / ${p.photos.length} available</span>
       </div>
       <div class="chosen">
         <h4>On the site — in this order</h4>
@@ -151,6 +163,7 @@ function render(){
           return `<div class="cell ${n>=0?'on':''} ${n===0?'first':''}" data-p="${pi}" data-i="${ii}">
             <img loading="lazy" src="${ph.thumb}" alt="">
             ${n>=0?`<span class="n">${n+1}${n===0?' ★':''}</span>`:''}
+            ${ph.ai?'<span class="ai">AI</span>':''}
           </div>`;}).join('')}
       </div>`;
     app.appendChild(el);
