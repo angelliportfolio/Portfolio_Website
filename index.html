@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <title>Angelli Nguyen | Photographer + Director</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=13">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Antic+Didone&family=Be+Vietnam+Pro:wght@100;200;300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -16,6 +16,8 @@
 <div class="page-wrapper">
   
   <div class="landing-header">
+    <!-- LOGO: once you add images/logo.png, tell me and I'll swap this
+         <h1> text for <img class="logo-img" src="images/logo.png" alt="ANGELLI NGUYEN"> -->
     <h1>ANGELLI NGUYEN</h1>
     <p>COLORADO BASED EDITORIAL &amp; WEDDING PHOTOGRAPHER</p>
   </div>
@@ -24,7 +26,7 @@
     
     <!-- Commercial + Brands -->
     <div class="accordion-item" id="acc-commercial">
-      <button class="accordion-tab">Commercial + Brands</button>
+      <button class="accordion-tab" aria-expanded="false"><span class="tab-label">Commercial + Brands</span><span class="tab-caret" aria-hidden="true"></span></button>
       <div class="accordion-content">
         <div class="accordion-inner">
           <header class="commercial-header">
@@ -33,23 +35,45 @@
               <span>PHOTOGRAPHER - DIRECTOR</span>
             </div>
             <nav class="commercial-nav">
-              <a href="#">FASHION</a>
-              <a href="#">BEAUTY</a>
-              <a href="#">ADVERTISING</a>
-              <a href="#">DIRECTING</a>
-              <a href="#">CONTACT</a>
+              <button class="cm-nav-link active" data-cat="home">HOME</button>
+              <button class="cm-nav-link" data-cat="beauty">BEAUTY</button>
+              <button class="cm-nav-link" data-cat="fashion">FASHION</button>
+              <button class="cm-nav-link" data-cat="advertising">ADVERTISING</button>
+              <button class="cm-nav-link" data-cat="directing">DIRECTING</button>
+              <button class="cm-nav-link" data-cat="contact">CONTACT</button>
             </nav>
           </header>
-          
-          <div class="commercial-grid">
-            <div class="grid-img t-fashion r-square"></div>
-            <div class="grid-img t-beauty r-square"></div>
-            <div class="grid-img t-fashion r-square"></div>
-            <div class="grid-img t-beauty r-square"></div>
-            <div class="grid-img t-fashion r-square"></div>
-            <div class="grid-img t-beauty r-square"></div>
-            <div class="grid-img t-fashion r-square"></div>
-            <div class="grid-img t-beauty r-square"></div>
+
+          <!-- Gallery panel (populated from gallery-data.js) -->
+          <div class="commercial-gallery" id="commercialGallery"></div>
+
+          <!-- Contact panel -->
+          <div class="commercial-contact" id="commercialContact" hidden>
+            <div class="contact-grid">
+              <div class="contact-intro">
+                <h2 class="panel-title">Let's make something.</h2>
+                <p class="body-text">Fashion, beauty, and brand campaigns — on location or in studio, Colorado based and available worldwide.</p>
+                <p class="body-text">For commissions, rates, and availability, send a note. I respond to every serious inquiry.</p>
+                <a class="contact-email-link" id="contactEmailLink" href="#">Email directly &rarr;</a>
+              </div>
+              <form class="contact-form" id="commercialForm">
+                <label>Name<input type="text" name="name" required></label>
+                <label>Email<input type="email" name="email" required></label>
+                <label>Brand / Company<input type="text" name="company"></label>
+                <label>Project type
+                  <select name="project">
+                    <option value="Fashion">Fashion</option>
+                    <option value="Beauty">Beauty</option>
+                    <option value="Advertising">Advertising</option>
+                    <option value="Directing">Directing</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </label>
+                <label>Message<textarea name="message" rows="4" required></textarea></label>
+                <button type="submit" class="contact-submit">SEND INQUIRY</button>
+                <p class="form-status" id="commercialFormStatus" aria-live="polite"></p>
+              </form>
+            </div>
           </div>
         </div>
       </div>
@@ -57,10 +81,10 @@
 
     <!-- Weddings + Lifestyle -->
     <div class="accordion-item" id="acc-weddings">
-      <button class="accordion-tab">Weddings + Lifestyle</button>
+      <button class="accordion-tab" aria-expanded="false"><span class="tab-label">Weddings + Lifestyle</span><span class="tab-caret" aria-hidden="true"></span></button>
       <div class="accordion-content">
         <div class="accordion-inner">
-          
+
           <!-- Weddings Part 3: Header section now at top -->
           <div class="weddings-section-3">
             <header class="weddings-header">
@@ -114,14 +138,54 @@
 
     <!-- Contact + About -->
     <div class="accordion-item" id="acc-contact">
-      <button class="accordion-tab">Contact + About</button>
+      <button class="accordion-tab" aria-expanded="false"><span class="tab-label">Contact + About</span><span class="tab-caret" aria-hidden="true"></span></button>
       <div class="accordion-content">
         <div class="accordion-inner">
-          <div class="blank-template">
-            <h2 class="serif-title-left" style="margin-bottom: 20px;">Contact + About</h2>
-            <p class="body-text">This section is ready for your contact information, bio, and inquiry form.</p>
-            <div class="placeholder-box"></div>
-          </div>
+          <header class="commercial-header">
+            <div class="logo-block">
+              <h2>ANGELLI NGUYEN</h2>
+              <span>PHOTOGRAPHER - DIRECTOR</span>
+            </div>
+          </header>
+
+          <!-- About + Get in touch: image fills the left, copy stacks on the right -->
+          <section class="contact-split">
+            <div class="cs-image">
+              <img loading="lazy" decoding="async" src="hero.jpg" alt="Angelli Nguyen, photographer and director">
+            </div>
+            <div class="cs-content">
+              <div class="about-copy">
+                <p class="body-text">I photograph and direct across two worlds — commercial campaigns for beauty and fashion brands, and weddings for couples who want their day treated with the same editorial eye.</p>
+                <p class="body-text">The work is built on restraint. Real light, real moments, and a frame that holds still long enough to feel like something. Film and digital, depending on what the story asks for.</p>
+                <div class="about-links">
+                  <a class="contact-email-link" href="#">Email directly &rarr;</a>
+                  <a class="contact-email-link" href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram &rarr;</a>
+                </div>
+              </div>
+
+              <h2 class="panel-title">Get in touch</h2>
+              <p class="git-sub">Fill out the form below and I'll get back to you as soon as possible.</p>
+              <form class="contact-form" id="generalForm">
+                <div class="field-row">
+                  <label>First name<input type="text" name="firstName" required></label>
+                  <label>Last name<input type="text" name="lastName" required></label>
+                </div>
+                <label>Email<input type="email" name="email" required></label>
+                <label>Service type
+                  <select name="service">
+                    <option value="Commercial">Commercial</option>
+                    <option value="Wedding">Wedding</option>
+                    <option value="Portrait">Portrait</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </label>
+                <label>How can I help?<input type="text" name="subject"></label>
+                <label>Message<textarea name="message" rows="5" required></textarea></label>
+                <button type="submit" class="contact-submit">SEND INQUIRY</button>
+                <p class="form-status" id="generalFormStatus" aria-live="polite"></p>
+              </form>
+            </div>
+          </section>
         </div>
       </div>
     </div>
@@ -130,6 +194,18 @@
 
 </div>
 
-<script src="main.js"></script>
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" hidden>
+  <button class="lb-close" id="lbClose" aria-label="Close">&times;</button>
+  <button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous">&#8249;</button>
+  <figure class="lb-stage">
+    <img id="lbImage" src="" alt="">
+    <figcaption class="lb-counter" id="lbCounter"></figcaption>
+  </figure>
+  <button class="lb-nav lb-next" id="lbNext" aria-label="Next">&#8250;</button>
+</div>
+
+<script src="gallery-data.js?v=13"></script>
+<script src="main.js?v=13"></script>
 </body>
 </html>

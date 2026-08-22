@@ -2,6 +2,25 @@
    ANGELLI PRODUCTIONS — New Layout
    ========================================================== */
 
+/* ---- Radiant Charisma (self-hosted; upload files to /fonts) ----
+   Falls back to Cormorant Garamond until the files are added. */
+@font-face {
+  font-family: 'Radiant Charisma';
+  src: url('fonts/radiant-charisma-light.woff2') format('woff2'),
+       url('fonts/radiant-charisma-light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Radiant Charisma';
+  src: url('fonts/radiant-charisma-regular.woff2') format('woff2'),
+       url('fonts/radiant-charisma-regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -21,17 +40,20 @@ body, html {
 /* Background image is fixed. When accordion expands, content scrolls over it. */
 .hero-background {
   position: fixed;
-  top: 0; left: 0; 
+  top: 0; left: 0;
   width: 100%; height: 100vh;
-  background-image: url('hero.png');
-  background-color: #666; /* Fallback */
+  /* Dark overlay keeps the white name + nav legible over any hero image
+     (and over the fallback color until hero.png is added). */
+  background-image: linear-gradient(rgba(0,0,0,0.30), rgba(0,0,0,0.45)), url('hero.jpg');
+  background-color: #2c2823; /* Dark warm fallback */
   background-size: cover;
   background-position: center top;
-  z-index: -1;
+  z-index: 0;
 }
 
 .page-wrapper {
   position: relative;
+  z-index: 1;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -42,8 +64,18 @@ body, html {
   padding-top: 8vh;
   padding-bottom: 8vh;
   color: #fff;
-  flex: 1; /* Pushes the accordion to the bottom */
+  /* Fills the viewport above the three tabs (3 × 13vh) and never shrinks,
+     so opening a panel below it doesn't yank the hero out from under you. */
+  flex: 1 0 auto;
+  min-height: 61vh;
+  overflow: hidden;
+  transition: max-height 0.8s cubic-bezier(0.33, 0, 0.2, 1),
+              opacity 0.6s ease,
+              padding 0.8s cubic-bezier(0.33, 0, 0.2, 1);
 }
+
+/* The hero stays put when a section opens — the page scrolls down to the
+   open section instead, so the tabs behave like a true dropdown. */
 
 .landing-header h1 {
   font-size: clamp(30px, 8vw, 80px);
@@ -51,6 +83,14 @@ body, html {
   letter-spacing: 0.05em;
   margin: 0;
   line-height: 1;
+}
+
+/* Header logo image (replaces the wordmark on the landing) */
+.logo-img {
+  display: block;
+  margin: 0 auto;
+  max-width: min(560px, 82vw);
+  height: auto;
 }
 
 .landing-header p {
@@ -63,10 +103,12 @@ body, html {
   color: rgba(255, 255, 255, 0.9);
 }
 
-/* ACCORDION */
+/* ACCORDION
+   The landing-header (flex: 1) pushes the nav to the bottom of the hero.
+   When a section opens, the header collapses and the nav tabs collapse,
+   driving one smooth downward reveal — no margin jumps, no white flash. */
 .accordion-container {
   width: 100%;
-  margin-top: auto;
   z-index: 10;
 }
 
@@ -77,34 +119,66 @@ body, html {
 
 .accordion-tab {
   width: 100%;
-  padding: 24px 5%;
-  background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-height: 13vh;
+  padding: 28px 5% 28px 2.5%;    /* pulled in toward the left edge */
+  background: transparent;       /* no frosted panel — photography shows through */
   border: none;
   text-align: left;
-  font-family: 'Inter', sans-serif;
-  font-size: clamp(18px, 3vw, 24px);
+  font-size: clamp(21px, 2.29vw, 38px);
   font-weight: 400;
+  letter-spacing: -0.025em;
   color: #fff;
   cursor: pointer;
-  transition: background 0.3s, color 0.3s;
+  overflow: hidden;
+  transition: background 0.4s ease, color 0.4s ease;
 }
 
+.tab-label { display: block; }
+
+/* Chevron — points down when closed, flips up when open. */
+.tab-caret {
+  flex: none;
+  width: 11px;
+  height: 11px;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  transform: rotate(45deg) translate(-2px, -2px);
+  opacity: 0.65;
+  transition: transform 0.5s cubic-bezier(0.33, 0, 0.2, 1), opacity 0.3s;
+}
+
+.accordion-tab:hover .tab-caret { opacity: 1; }
+
+.accordion-item.active .tab-caret {
+  transform: rotate(-135deg) translate(-2px, -2px);
+  opacity: 1;
+}
+
+/* Hover lightens the tab. */
 .accordion-tab:hover {
-  background: rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.22);
 }
 
+/* Open: highlighted only. Type size, weight, spacing and case all stay
+   exactly as they are closed — the tab just lights up white. */
 .accordion-item.active .accordion-tab {
   background: #fff;
   color: #1a1a1a;
-  font-weight: 500;
+  border-bottom: 1px solid #ece8e2;
+}
+
+.accordion-item.active .accordion-tab:hover {
+  background: #fff;
 }
 
 .accordion-content {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: grid-template-rows 0.8s cubic-bezier(0.33, 0, 0.2, 1);
   background-color: #fff;
 }
 
@@ -131,19 +205,18 @@ body, html {
 }
 
 .logo-block h2 {
-  font-size: 36px;
+  font-size: 3.6em;
   font-weight: 700;
   margin: 0;
-  letter-spacing: 0.05em;
+  letter-spacing: -3.5px;
   line-height: 1;
 }
 
 .logo-block span {
-  font-family: 'Inter', sans-serif;
-  font-size: 11px;
-  letter-spacing: 0.25em;
+  font-size: 1em;
+  letter-spacing: 1.8px;
   color: #444;
-  margin-top: 8px;
+  margin-top: 12px;
   display: block;
 }
 
@@ -153,33 +226,332 @@ body, html {
   flex-wrap: wrap;
 }
 
-.commercial-nav a {
-  font-family: 'Inter', sans-serif;
-  text-decoration: none;
+.commercial-nav {
+  -webkit-overflow-scrolling: touch;
+}
+
+.cm-nav-link {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #444;
+  font-size: 1em;
+  font-weight: 400;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  padding: 0 0 4px;
+  border-bottom: 1px solid transparent;
+  transition: opacity 0.3s, border-color 0.3s, color 0.3s;
+  white-space: nowrap;
+}
+
+.cm-nav-link:hover { opacity: 0.6; }
+
+.cm-nav-link.active {
   color: #1a1a1a;
+  border-bottom-color: #1a1a1a;
+  opacity: 1;
+}
+
+/* ---- Project grid ----
+   One tile per project. The cover sits on top of a stack of the rest of
+   the set; hovering fades through them. Columns are staggered vertically
+   so the grid reads editorial rather than like a contact sheet. */
+.commercial-gallery {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: 2.2vw;
+  row-gap: 40px;
+  padding: 40px 5% 160px;
+  align-items: start;
+}
+
+/* Gutters vary with the rhythm — beauty packs tighter, fashion breathes. */
+.layout-beauty { column-gap: 1.8vw; row-gap: 34px; }
+.layout-fashion { column-gap: 2.4vw; row-gap: 48px; }
+.layout-advertising { row-gap: 56px; }
+.layout-directing { column-gap: 2vw; row-gap: 52px; }
+
+.cm-project {
+  position: relative;
+  margin: 0;
+  cursor: pointer;
+}
+
+/* ---- Per-category rhythms ----
+   Every tab is a scattered, off-axis spread, but no two share a rhythm: they
+   differ in how many steps the pattern runs before repeating, how wide the
+   frames are, how far each one drops, and which crops it uses.
+
+   The layout classes go through :where() so they add no specificity — that
+   lets the tablet and phone rules below override all five in one pass. */
+
+/* HOME · five-step. Widest range of crops; the signature spread. */
+:where(.layout-home) .cm-project:nth-child(5n + 1) { grid-column: 1 / span 5;  margin-top: 0; }
+:where(.layout-home) .cm-project:nth-child(5n + 2) { grid-column: 8 / span 4;  margin-top: 150px; }
+:where(.layout-home) .cm-project:nth-child(5n + 3) { grid-column: 2 / span 3;  margin-top: 40px; }
+:where(.layout-home) .cm-project:nth-child(5n + 4) { grid-column: 6 / span 6;  margin-top: 0; }
+:where(.layout-home) .cm-project:nth-child(5n + 5) { grid-column: 4 / span 4;  margin-top: 90px; }
+
+:where(.layout-home) .cm-project:nth-child(5n + 1) .cm-stack { aspect-ratio: 4 / 5; }
+:where(.layout-home) .cm-project:nth-child(5n + 2) .cm-stack { aspect-ratio: 3 / 4; }
+:where(.layout-home) .cm-project:nth-child(5n + 3) .cm-stack { aspect-ratio: 1 / 1; }
+:where(.layout-home) .cm-project:nth-child(5n + 4) .cm-stack { aspect-ratio: 5 / 4; }
+:where(.layout-home) .cm-project:nth-child(5n + 5) .cm-stack { aspect-ratio: 2 / 3; }
+
+/* BEAUTY · six-step. Smaller frames packed three to a row, then thinning
+   out — close-up work sits nearer together than anywhere else. */
+:where(.layout-beauty) .cm-project:nth-child(6n + 1) { grid-column: 1 / span 4;  margin-top: 0; }
+:where(.layout-beauty) .cm-project:nth-child(6n + 2) { grid-column: 6 / span 3;  margin-top: 95px; }
+:where(.layout-beauty) .cm-project:nth-child(6n + 3) { grid-column: 10 / span 3; margin-top: 25px; }
+:where(.layout-beauty) .cm-project:nth-child(6n + 4) { grid-column: 3 / span 3;  margin-top: 70px; }
+:where(.layout-beauty) .cm-project:nth-child(6n + 5) { grid-column: 7 / span 4;  margin-top: 0; }
+:where(.layout-beauty) .cm-project:nth-child(6n + 6) { grid-column: 2 / span 5;  margin-top: 115px; }
+
+:where(.layout-beauty) .cm-project:nth-child(6n + 1) .cm-stack { aspect-ratio: 1 / 1; }
+:where(.layout-beauty) .cm-project:nth-child(6n + 2) .cm-stack { aspect-ratio: 3 / 4; }
+:where(.layout-beauty) .cm-project:nth-child(6n + 3) .cm-stack { aspect-ratio: 4 / 5; }
+:where(.layout-beauty) .cm-project:nth-child(6n + 4) .cm-stack { aspect-ratio: 1 / 1; }
+:where(.layout-beauty) .cm-project:nth-child(6n + 5) .cm-stack { aspect-ratio: 4 / 5; }
+:where(.layout-beauty) .cm-project:nth-child(6n + 6) .cm-stack { aspect-ratio: 3 / 4; }
+
+/* FASHION · four-step. The longest drops on the site — two per row with one
+   always hanging far below the other, so the page reads lean and vertical. */
+:where(.layout-fashion) .cm-project:nth-child(4n + 1) { grid-column: 1 / span 4;  margin-top: 0; }
+:where(.layout-fashion) .cm-project:nth-child(4n + 2) { grid-column: 6 / span 5;  margin-top: 180px; }
+:where(.layout-fashion) .cm-project:nth-child(4n + 3) { grid-column: 3 / span 4;  margin-top: 55px; }
+:where(.layout-fashion) .cm-project:nth-child(4n + 4) { grid-column: 8 / span 4;  margin-top: 0; }
+
+:where(.layout-fashion) .cm-project:nth-child(4n + 1) .cm-stack { aspect-ratio: 2 / 3; }
+:where(.layout-fashion) .cm-project:nth-child(4n + 2) .cm-stack { aspect-ratio: 3 / 4; }
+:where(.layout-fashion) .cm-project:nth-child(4n + 3) .cm-stack { aspect-ratio: 2 / 3; }
+:where(.layout-fashion) .cm-project:nth-child(4n + 4) .cm-stack { aspect-ratio: 4 / 5; }
+
+/* ADVERTISING · three-step. The largest frames, offset by one narrow upright
+   so a row never resolves into a tidy pair. */
+:where(.layout-advertising) .cm-project:nth-child(3n + 1) { grid-column: 1 / span 7; margin-top: 0; }
+:where(.layout-advertising) .cm-project:nth-child(3n + 2) { grid-column: 9 / span 4; margin-top: 150px; }
+:where(.layout-advertising) .cm-project:nth-child(3n + 3) { grid-column: 4 / span 6; margin-top: 60px; }
+
+:where(.layout-advertising) .cm-project:nth-child(3n + 1) .cm-stack { aspect-ratio: 16 / 10; }
+:where(.layout-advertising) .cm-project:nth-child(3n + 2) .cm-stack { aspect-ratio: 3 / 4; }
+:where(.layout-advertising) .cm-project:nth-child(3n + 3) .cm-stack { aspect-ratio: 5 / 4; }
+
+/* DIRECTING · four-step. Wide frames pulled from a reel, scattered rather
+   than paired, with one upright still breaking the run of landscapes. */
+:where(.layout-directing) .cm-project:nth-child(4n + 1) { grid-column: 1 / span 6;  margin-top: 0; }
+:where(.layout-directing) .cm-project:nth-child(4n + 2) { grid-column: 8 / span 5;  margin-top: 135px; }
+:where(.layout-directing) .cm-project:nth-child(4n + 3) { grid-column: 3 / span 7;  margin-top: 55px; }
+:where(.layout-directing) .cm-project:nth-child(4n + 4) { grid-column: 2 / span 4;  margin-top: 0; }
+
+:where(.layout-directing) .cm-project:nth-child(4n + 1) .cm-stack { aspect-ratio: 16 / 9; }
+:where(.layout-directing) .cm-project:nth-child(4n + 2) .cm-stack { aspect-ratio: 16 / 10; }
+:where(.layout-directing) .cm-project:nth-child(4n + 3) .cm-stack { aspect-ratio: 16 / 9; }
+:where(.layout-directing) .cm-project:nth-child(4n + 4) .cm-stack { aspect-ratio: 4 / 5; }
+
+.cm-stack {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;   /* overridden per slot by the rhythm above */
+  overflow: hidden;
+  background: #efece7;
+}
+
+.cm-stack img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.5s ease, transform 1.4s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.cm-stack img.is-shown { opacity: 1; }
+
+.cm-project:hover .cm-stack img { transform: scale(1.035); }
+
+/* Frame count, bottom-left of the image, only while hovering. */
+.cm-count {
+  position: absolute;
+  left: 14px;
+  bottom: 12px;
+  z-index: 2;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: #fff;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.5);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.cm-project:hover .cm-count { opacity: 0.9; }
+
+.cm-caption {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid #e7e2db;
+}
+
+/* Hairline that draws itself across the caption on hover. */
+.cm-caption::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 100%;
+  height: 1px;
+  background: #1a1a1a;
+  transition: right 0.65s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.cm-project:hover .cm-caption::before { right: 0; }
+
+/* Even slots hang their caption off the right edge — rule draws that way too.
+   Only on the asymmetric layouts; the even grids keep every caption flush left
+   so the columns stay readable. */
+.cm-project:nth-child(even) .cm-caption {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.cm-project:nth-child(even) .cm-caption::before {
+  left: 100%;
+  right: 0;
+  transition: left 0.65s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.cm-project:nth-child(even):hover .cm-caption::before { left: 0; }
+
+.cm-title {
   font-size: 12px;
   font-weight: 500;
-  letter-spacing: 0.1em;
-  transition: opacity 0.3s;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #1a1a1a;
 }
 
-.commercial-nav a:hover {
-  opacity: 0.6;
+.cm-meta {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #a09a92;
+  white-space: nowrap;
 }
 
-.commercial-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  padding: 0 5% 80px;
+/* Tablet: one shared four-step rhythm replaces all five. These selectors
+   carry real specificity while the desktop rules sit inside :where(), so this
+   single pass overrides every category. Crops are left alone, which is what
+   keeps the categories distinguishable at this width. */
+@media (max-width: 1000px) {
+  .commercial-gallery { grid-template-columns: repeat(8, 1fr); row-gap: 32px; }
+  .commercial-gallery .cm-project:nth-child(4n + 1) { grid-column: 1 / span 5; margin-top: 0; }
+  .commercial-gallery .cm-project:nth-child(4n + 2) { grid-column: 6 / span 3; margin-top: 90px; }
+  .commercial-gallery .cm-project:nth-child(4n + 3) { grid-column: 2 / span 4; margin-top: 40px; }
+  .commercial-gallery .cm-project:nth-child(4n + 4) { grid-column: 6 / span 3; margin-top: 0; }
 }
 
 @media (max-width: 900px) {
-  .commercial-grid { grid-template-columns: repeat(2, 1fr); }
+  .commercial-nav { width: 100%; overflow-x: auto; padding-bottom: 6px; }
 }
 
-@media (max-width: 600px) {
-  .commercial-grid { grid-template-columns: 1fr; }
+/* Phone: one column, full width, offsets off — the crop variety carries it. */
+@media (max-width: 640px) {
+  .commercial-gallery { grid-template-columns: 1fr; row-gap: 48px; padding-top: 56px; }
+  .commercial-gallery .cm-project[class] { grid-column: 1 / -1; margin-top: 0; }
+}
+
+/* Commercial contact panel */
+.commercial-contact { padding: 0 5% 90px; }
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+
+.contact-intro .body-text { font-size: 18px; }
+
+.contact-email-link {
+  font-family: 'Inter', sans-serif;
+  display: inline-block;
+  margin-top: 20px;
+  text-decoration: none;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  color: #1a1a1a;
+  border-bottom: 1px solid #1a1a1a;
+  padding-bottom: 4px;
+}
+
+.contact-form { display: flex; flex-direction: column; gap: 18px; }
+
+.contact-form label {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #888;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  color: #1a1a1a;
+  border: none;
+  border-bottom: 1px solid #d8d2ca;
+  background: transparent;
+  padding: 8px 0;
+  letter-spacing: 0;
+  text-transform: none;
+  border-radius: 0;
+}
+
+.contact-form textarea { resize: vertical; }
+
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-bottom-color: #1a1a1a;
+}
+
+.contact-submit {
+  font-family: 'Inter', sans-serif;
+  margin-top: 10px;
+  align-self: flex-start;
+  background: #1a1a1a;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  padding: 16px 40px;
+  transition: opacity 0.3s;
+}
+
+.contact-submit:hover { opacity: 0.8; }
+
+.form-status {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: #777;
+  min-height: 16px;
+}
+
+@media (max-width: 768px) {
+  .contact-grid { grid-template-columns: 1fr; gap: 40px; }
 }
 
 /* ==========================================================
@@ -367,20 +739,91 @@ body, html {
 }
 
 /* ==========================================================
-   CONTACT + ABOUT (Blank Template)
+   CONTACT + ABOUT
+   Shares the commercial section's shell: same header, same sub-nav,
+   same two-column panel and form treatment.
    ========================================================== */
 
-.blank-template {
-  padding: 80px 5%;
-  min-height: 600px;
+/* ---- About + Get in touch ----
+   The image is a full-bleed column running the whole height of the section;
+   the about copy sits directly above the form in the right column. */
+.contact-split {
+  display: grid;
+  /* Exactly half the viewport for the image. The section carries no side
+     padding so that 50% is measured against the full screen width — the
+     right column supplies its own gutter instead. */
+  grid-template-columns: 50% 1fr;
+  gap: 0;
+  align-items: stretch;
+  padding: 0 0 110px;
 }
 
-.placeholder-box {
+.cs-image {
+  position: relative;      /* gives the absolutely-placed img a box to fill */
+  overflow: hidden;
+  background: #efece7;
+  min-height: 460px;
+}
+
+.cs-image img {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: 400px;
-  border: 1px dashed #ccc;
-  background: #f9f9f9;
-  margin-top: 40px;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cs-content { padding: 10px 5% 0 70px; }
+
+.about-copy {
+  padding-bottom: 44px;
+  margin-bottom: 48px;
+  border-bottom: 1px solid #ece8e2;
+}
+
+.about-copy .body-text:last-of-type { margin-bottom: 0; }
+
+.git-sub {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #777;
+  margin: -14px 0 34px;
+  max-width: 46ch;
+}
+
+/* First / last name sit side by side. */
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+@media (max-width: 900px) {
+  .contact-split {
+    grid-template-columns: 1fr;
+    gap: 44px;
+    padding: 0 5% 70px;
+  }
+  .cs-image { min-height: 0; aspect-ratio: 4 / 5; }
+  .field-row { grid-template-columns: 1fr; }
+}
+
+/* Panel heading — sans, matching the commercial voice. */
+.panel-title {
+  font-size: clamp(30px, 3.4vw, 46px);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 30px;
+  color: #1a1a1a;
+}
+
+.about-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  margin-top: 12px;
 }
 
 /* ==========================================================
@@ -398,11 +841,126 @@ body, html {
 .r-portrait-tall { aspect-ratio: 2/3; }
 .r-square { aspect-ratio: 1/1; }
 .r-landscape { aspect-ratio: 4/3; }
+.r-45 { aspect-ratio: 4/5; }
 
 /* Existing Gradients */
-.t-fashion   { background: linear-gradient(150deg, #ddd5c8 0%, #c8bfb2 100%); }
-.t-beauty    { background: linear-gradient(150deg, #ddd2cc 0%, #ccc0ba 100%); }
-.t-directing { background: linear-gradient(150deg, #cdd0d6 0%, #bcc2cc 100%); }
-.t-wedding   { background: linear-gradient(150deg, #e0dbd4 0%, #d0cbc4 100%); }
-.t-couples   { background: linear-gradient(150deg, #d6dbd0 0%, #c8ccc0 100%); }
-.t-portraits { background: linear-gradient(150deg, #ddd8d0 0%, #ccc8c0 100%); }
+.t-fashion     { background: linear-gradient(150deg, #a89e8e 0%, #8d8475 100%); }
+.t-beauty      { background: linear-gradient(150deg, #a89c95 0%, #8e837b 100%); }
+.t-advertising { background: linear-gradient(150deg, #9e988c 0%, #847e72 100%); }
+.t-directing   { background: linear-gradient(150deg, #969aa0 0%, #7d828b 100%); }
+.t-wedding   { background: linear-gradient(150deg, #aaa498 0%, #908a7e 100%); }
+.t-couples   { background: linear-gradient(150deg, #9da596 0%, #848c7c 100%); }
+.t-portraits { background: linear-gradient(150deg, #a8a294 0%, #8d877a 100%); }
+
+/* ==========================================================
+   LIGHTBOX
+   ========================================================== */
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(20, 18, 16, 0.94);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: lb-fade 0.25s ease;
+}
+
+.lightbox[hidden] { display: none; }
+
+@keyframes lb-fade { from { opacity: 0; } to { opacity: 1; } }
+
+.lb-stage {
+  margin: 0;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.lb-stage img {
+  max-width: 90vw;
+  max-height: 82vh;
+  object-fit: contain;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.lb-counter {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.lb-close,
+.lb-nav {
+  position: absolute;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  transition: color 0.3s;
+  line-height: 1;
+}
+
+.lb-close:hover,
+.lb-nav:hover { color: #fff; }
+
+.lb-close {
+  top: 24px;
+  right: 32px;
+  font-size: 40px;
+  font-weight: 200;
+}
+
+.lb-nav {
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 60px;
+  font-weight: 200;
+  padding: 0 24px;
+}
+
+.lb-prev { left: 8px; }
+.lb-next { right: 8px; }
+
+@media (max-width: 600px) {
+  .lb-nav { font-size: 40px; padding: 0 12px; }
+  .lb-close { top: 16px; right: 20px; }
+}
+
+/* ==========================================================
+   FONT ASSIGNMENTS (per section)
+   ========================================================== */
+
+/* Main header + primary nav — Be Vietnam Pro */
+.landing-header,
+.landing-header p,
+.accordion-tab {
+  font-family: 'Be Vietnam Pro', sans-serif;
+}
+
+/* Commercial + Contact section content — entirely Be Vietnam Pro */
+#acc-commercial .accordion-inner,
+#acc-commercial .accordion-inner *,
+#acc-contact .accordion-inner,
+#acc-contact .accordion-inner * {
+  font-family: 'Be Vietnam Pro', sans-serif;
+}
+#acc-commercial .accordion-inner code {
+  font-family: 'SF Mono', Menlo, monospace; /* keep code snippets monospaced */
+}
+
+/* Weddings section content — text in Antic Didone, headings in Radiant Charisma */
+#acc-weddings .accordion-inner,
+#acc-weddings .accordion-inner * {
+  font-family: 'Antic Didone', serif;
+}
+#acc-weddings .serif-title,
+#acc-weddings .serif-title-left,
+#acc-weddings .weddings-logo {
+  font-family: 'Radiant Charisma', 'Cormorant Garamond', serif;
+}

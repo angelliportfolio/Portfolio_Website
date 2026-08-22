@@ -1,0 +1,14 @@
+# Full-resolution originals — staging only, not part of the deployed site.
+# The web-optimised copies in images/commercial/ are what ship.
+images/_candidates/
+
+.DS_Store
+**/.DS_Store
+
+# Unrelated to the portfolio site — internship KPI tracking, kept local.
+emilynn-rose-kpi-tracker.csv
+kpi-dashboard.html
+
+# One-off curation helpers used while sorting photos.
+curate-beauty.html
+curation-beauty.html
