@@ -1,23 +1,19 @@
 /* ============================================================
    ANGELLI PRODUCTIONS — Commercial Work
    ------------------------------------------------------------
-   THIS IS THE ONLY FILE YOU EDIT TO CHANGE THE COMMERCIAL GRID.
+   EDIT THIS BY HAND, OR USE THE CURATION TOOL:
+       http://localhost:8765/curate.html
+   The tool writes straight back to this file.
 
    ONE SHOOT = ONE PROJECT = ONE THUMBNAIL. Hovering a thumbnail
    cycles through that shoot; clicking opens it in the lightbox.
 
-   Each project takes:
-     title    — shown under the thumbnail (required)
+     title    — shown under the thumbnail
      client   — brand, e.g. "Charlotte Tilbury" (optional)
      year     — e.g. "2025" (optional)
      category — "campaigns" | "product" | "beauty" | "fashion"
      images   — array of paths. THE FIRST ONE IS THE COVER.
      featured — add `featured: true` to put a project on SELECTED.
-
-   Frames were curated from the content drive: near-identical takes
-   were dropped automatically, then each shoot capped so a slideshow
-   stays tight. Reorder or trim the arrays freely — the first image
-   is the cover, so swap that to change a thumbnail.
    ============================================================ */
 
 const COMMERCIAL_PROJECTS = [
@@ -29,13 +25,13 @@ const COMMERCIAL_PROJECTS = [
     year: "",
     category: "campaigns",
     images: [
+      "images/commercial/charlotte-tilbury/charlotte-tilbury-07.jpg",
       "images/commercial/charlotte-tilbury/charlotte-tilbury-01.jpg",
       "images/commercial/charlotte-tilbury/charlotte-tilbury-02.jpg",
       "images/commercial/charlotte-tilbury/charlotte-tilbury-03.jpg",
       "images/commercial/charlotte-tilbury/charlotte-tilbury-04.jpg",
       "images/commercial/charlotte-tilbury/charlotte-tilbury-05.jpg",
       "images/commercial/charlotte-tilbury/charlotte-tilbury-06.jpg",
-      "images/commercial/charlotte-tilbury/charlotte-tilbury-07.jpg",
       "images/commercial/charlotte-tilbury/charlotte-tilbury-08.jpg",
       "images/commercial/charlotte-tilbury/charlotte-tilbury-09.jpg",
       "images/commercial/charlotte-tilbury/charlotte-tilbury-10.jpg",
@@ -55,11 +51,11 @@ const COMMERCIAL_PROJECTS = [
     year: "",
     category: "campaigns",
     images: [
+      "images/commercial/summer-fridays/summer-fridays-05.jpg",
       "images/commercial/summer-fridays/summer-fridays-01.jpg",
       "images/commercial/summer-fridays/summer-fridays-02.jpg",
       "images/commercial/summer-fridays/summer-fridays-03.jpg",
       "images/commercial/summer-fridays/summer-fridays-04.jpg",
-      "images/commercial/summer-fridays/summer-fridays-05.jpg",
       "images/commercial/summer-fridays/summer-fridays-06.jpg",
       "images/commercial/summer-fridays/summer-fridays-07.jpg",
       "images/commercial/summer-fridays/summer-fridays-08.jpg",
@@ -97,6 +93,7 @@ const COMMERCIAL_PROJECTS = [
     year: "",
     category: "campaigns",
     images: [
+      "images/commercial/tessi/tessi-18.jpg",
       "images/commercial/tessi/tessi-01.jpg",
       "images/commercial/tessi/tessi-02.jpg",
       "images/commercial/tessi/tessi-03.jpg",
@@ -114,7 +111,6 @@ const COMMERCIAL_PROJECTS = [
       "images/commercial/tessi/tessi-15.jpg",
       "images/commercial/tessi/tessi-16.jpg",
       "images/commercial/tessi/tessi-17.jpg",
-      "images/commercial/tessi/tessi-18.jpg",
     ],
   },
 
@@ -148,8 +144,6 @@ const COMMERCIAL_PROJECTS = [
     year: "",
     category: "beauty",
     images: [
-      "images/commercial/acacia/acacia-01.jpg",
-      "images/commercial/acacia/acacia-02.jpg",
       "images/commercial/acacia/acacia-03.jpg",
       "images/commercial/acacia/acacia-04.jpg",
       "images/commercial/acacia/acacia-05.jpg",
@@ -349,6 +343,29 @@ const COMMERCIAL_PROJECTS = [
   },
 
   {
+    title: "Tabatha",
+    client: "",
+    year: "",
+    category: "beauty",
+    images: [
+      "images/commercial/tabatha/tabatha-03.jpg",
+      "images/commercial/tabatha/tabatha-01.jpg",
+      "images/commercial/tabatha/tabatha-02.jpg",
+      "images/commercial/tabatha/tabatha-04.jpg",
+      "images/commercial/tabatha/tabatha-05.jpg",
+      "images/commercial/tabatha/tabatha-06.jpg",
+      "images/commercial/tabatha/tabatha-07.jpg",
+      "images/commercial/tabatha/tabatha-08.jpg",
+      "images/commercial/tabatha/tabatha-09.jpg",
+      "images/commercial/tabatha/tabatha-10.jpg",
+      "images/commercial/tabatha/tabatha-11.jpg",
+      "images/commercial/tabatha/tabatha-12.jpg",
+      "images/commercial/tabatha/tabatha-13.jpg",
+      "images/commercial/tabatha/tabatha-14.jpg",
+    ],
+  },
+
+  {
     title: "Jordan",
     featured: true,
     client: "",
@@ -369,22 +386,6 @@ const COMMERCIAL_PROJECTS = [
       "images/commercial/jordan/jordan-12.jpg",
       "images/commercial/jordan/jordan-13.jpg",
       "images/commercial/jordan/jordan-14.jpg",
-    ],
-  },
-
-  {
-    title: "Ally",
-    client: "",
-    year: "",
-    category: "fashion",
-    images: [
-      "images/commercial/ally/ally-01.jpg",
-      "images/commercial/ally/ally-02.jpg",
-      "images/commercial/ally/ally-03.jpg",
-      "images/commercial/ally/ally-04.jpg",
-      "images/commercial/ally/ally-05.jpg",
-      "images/commercial/ally/ally-06.jpg",
-      "images/commercial/ally/ally-07.jpg",
     ],
   },
 
@@ -432,8 +433,6 @@ const COMMERCIAL_PROJECTS = [
     year: "",
     category: "fashion",
     images: [
-      "images/commercial/serena/serena-01.jpg",
-      "images/commercial/serena/serena-02.jpg",
       "images/commercial/serena/serena-03.jpg",
       "images/commercial/serena/serena-04.jpg",
       "images/commercial/serena/serena-05.jpg",
@@ -446,29 +445,6 @@ const COMMERCIAL_PROJECTS = [
       "images/commercial/serena/serena-12.jpg",
       "images/commercial/serena/serena-13.jpg",
       "images/commercial/serena/serena-14.jpg",
-    ],
-  },
-
-  {
-    title: "Tabatha",
-    client: "",
-    year: "",
-    category: "fashion",
-    images: [
-      "images/commercial/tabatha/tabatha-01.jpg",
-      "images/commercial/tabatha/tabatha-02.jpg",
-      "images/commercial/tabatha/tabatha-03.jpg",
-      "images/commercial/tabatha/tabatha-04.jpg",
-      "images/commercial/tabatha/tabatha-05.jpg",
-      "images/commercial/tabatha/tabatha-06.jpg",
-      "images/commercial/tabatha/tabatha-07.jpg",
-      "images/commercial/tabatha/tabatha-08.jpg",
-      "images/commercial/tabatha/tabatha-09.jpg",
-      "images/commercial/tabatha/tabatha-10.jpg",
-      "images/commercial/tabatha/tabatha-11.jpg",
-      "images/commercial/tabatha/tabatha-12.jpg",
-      "images/commercial/tabatha/tabatha-13.jpg",
-      "images/commercial/tabatha/tabatha-14.jpg",
     ],
   },
 ];

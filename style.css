@@ -259,20 +259,12 @@ body, html {
    so the grid reads editorial rather than like a contact sheet. */
 .commercial-gallery {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  column-gap: 2.2vw;
-  row-gap: 40px;
-  padding: 40px 5% 160px;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 26px;
+  row-gap: 64px;
+  padding: 40px 5% 140px;
   align-items: start;
 }
-
-/* Gutters vary with the rhythm — beauty packs tighter, fashion breathes. */
-.layout-beauty { column-gap: 1.8vw; row-gap: 34px; }
-.layout-fashion { column-gap: 2.4vw; row-gap: 48px; }
-.layout-nails { column-gap: 1.9vw; row-gap: 42px; }
-.layout-product { column-gap: 2.6vw; row-gap: 60px; }
-.layout-campaigns { row-gap: 56px; }
-.layout-directing { column-gap: 2vw; row-gap: 52px; }
 
 .cm-project {
   position: relative;
@@ -280,107 +272,13 @@ body, html {
   cursor: pointer;
 }
 
-/* ---- Per-category rhythms ----
-   Every tab is a scattered, off-axis spread, but no two share a rhythm: they
-   differ in how many steps the pattern runs before repeating, how wide the
-   frames are, how far each one drops, and which crops it uses.
-
-   The layout classes go through :where() so they add no specificity — that
-   lets the tablet and phone rules below override all five in one pass. */
-
-/* HOME · five-step. Widest range of crops; the signature spread. */
-:where(.layout-home) .cm-project:nth-child(5n + 1) { grid-column: 1 / span 5;  margin-top: 0; }
-:where(.layout-home) .cm-project:nth-child(5n + 2) { grid-column: 8 / span 4;  margin-top: 150px; }
-:where(.layout-home) .cm-project:nth-child(5n + 3) { grid-column: 2 / span 3;  margin-top: 40px; }
-:where(.layout-home) .cm-project:nth-child(5n + 4) { grid-column: 6 / span 6;  margin-top: 0; }
-:where(.layout-home) .cm-project:nth-child(5n + 5) { grid-column: 4 / span 4;  margin-top: 90px; }
-
-:where(.layout-home) .cm-project:nth-child(5n + 1) .cm-stack { aspect-ratio: 4 / 5; }
-:where(.layout-home) .cm-project:nth-child(5n + 2) .cm-stack { aspect-ratio: 3 / 4; }
-:where(.layout-home) .cm-project:nth-child(5n + 3) .cm-stack { aspect-ratio: 1 / 1; }
-:where(.layout-home) .cm-project:nth-child(5n + 4) .cm-stack { aspect-ratio: 5 / 4; }
-:where(.layout-home) .cm-project:nth-child(5n + 5) .cm-stack { aspect-ratio: 2 / 3; }
-
-/* BEAUTY · six-step. Smaller frames packed three to a row, then thinning
-   out — close-up work sits nearer together than anywhere else. */
-:where(.layout-beauty) .cm-project:nth-child(6n + 1) { grid-column: 1 / span 4;  margin-top: 0; }
-:where(.layout-beauty) .cm-project:nth-child(6n + 2) { grid-column: 6 / span 3;  margin-top: 95px; }
-:where(.layout-beauty) .cm-project:nth-child(6n + 3) { grid-column: 10 / span 3; margin-top: 25px; }
-:where(.layout-beauty) .cm-project:nth-child(6n + 4) { grid-column: 3 / span 3;  margin-top: 70px; }
-:where(.layout-beauty) .cm-project:nth-child(6n + 5) { grid-column: 7 / span 4;  margin-top: 0; }
-:where(.layout-beauty) .cm-project:nth-child(6n + 6) { grid-column: 2 / span 5;  margin-top: 115px; }
-
-:where(.layout-beauty) .cm-project:nth-child(6n + 1) .cm-stack { aspect-ratio: 1 / 1; }
-:where(.layout-beauty) .cm-project:nth-child(6n + 2) .cm-stack { aspect-ratio: 3 / 4; }
-:where(.layout-beauty) .cm-project:nth-child(6n + 3) .cm-stack { aspect-ratio: 4 / 5; }
-:where(.layout-beauty) .cm-project:nth-child(6n + 4) .cm-stack { aspect-ratio: 1 / 1; }
-:where(.layout-beauty) .cm-project:nth-child(6n + 5) .cm-stack { aspect-ratio: 4 / 5; }
-:where(.layout-beauty) .cm-project:nth-child(6n + 6) .cm-stack { aspect-ratio: 3 / 4; }
-
-/* PRODUCT · four-step. Cleaner and squarer than the rest — product needs air
-   around it, so the frames sit further apart and crop tighter to the object. */
-:where(.layout-product) .cm-project:nth-child(4n + 1) { grid-column: 1 / span 5;  margin-top: 0; }
-:where(.layout-product) .cm-project:nth-child(4n + 2) { grid-column: 7 / span 5;  margin-top: 115px; }
-:where(.layout-product) .cm-project:nth-child(4n + 3) { grid-column: 2 / span 4;  margin-top: 45px; }
-:where(.layout-product) .cm-project:nth-child(4n + 4) { grid-column: 7 / span 4;  margin-top: 0; }
-
-:where(.layout-product) .cm-project:nth-child(4n + 1) .cm-stack { aspect-ratio: 4 / 5; }
-:where(.layout-product) .cm-project:nth-child(4n + 2) .cm-stack { aspect-ratio: 1 / 1; }
-:where(.layout-product) .cm-project:nth-child(4n + 3) .cm-stack { aspect-ratio: 3 / 4; }
-:where(.layout-product) .cm-project:nth-child(4n + 4) .cm-stack { aspect-ratio: 4 / 5; }
-
-/* NAILS · five-step. Hands and nail art are the subject, so frames run tall
-   and sit closer together than product — more like a lookbook than a spread. */
-:where(.layout-nails) .cm-project:nth-child(5n + 1) { grid-column: 1 / span 4;  margin-top: 0; }
-:where(.layout-nails) .cm-project:nth-child(5n + 2) { grid-column: 6 / span 3;  margin-top: 120px; }
-:where(.layout-nails) .cm-project:nth-child(5n + 3) { grid-column: 10 / span 3; margin-top: 20px; }
-:where(.layout-nails) .cm-project:nth-child(5n + 4) { grid-column: 2 / span 5;  margin-top: 60px; }
-:where(.layout-nails) .cm-project:nth-child(5n + 5) { grid-column: 8 / span 4;  margin-top: 0; }
-
-:where(.layout-nails) .cm-project:nth-child(5n + 1) .cm-stack { aspect-ratio: 2 / 3; }
-:where(.layout-nails) .cm-project:nth-child(5n + 2) .cm-stack { aspect-ratio: 3 / 4; }
-:where(.layout-nails) .cm-project:nth-child(5n + 3) .cm-stack { aspect-ratio: 3 / 4; }
-:where(.layout-nails) .cm-project:nth-child(5n + 4) .cm-stack { aspect-ratio: 4 / 5; }
-:where(.layout-nails) .cm-project:nth-child(5n + 5) .cm-stack { aspect-ratio: 2 / 3; }
-
-/* FASHION · four-step. The longest drops on the site — two per row with one
-   always hanging far below the other, so the page reads lean and vertical. */
-:where(.layout-fashion) .cm-project:nth-child(4n + 1) { grid-column: 1 / span 4;  margin-top: 0; }
-:where(.layout-fashion) .cm-project:nth-child(4n + 2) { grid-column: 6 / span 5;  margin-top: 180px; }
-:where(.layout-fashion) .cm-project:nth-child(4n + 3) { grid-column: 3 / span 4;  margin-top: 55px; }
-:where(.layout-fashion) .cm-project:nth-child(4n + 4) { grid-column: 8 / span 4;  margin-top: 0; }
-
-:where(.layout-fashion) .cm-project:nth-child(4n + 1) .cm-stack { aspect-ratio: 2 / 3; }
-:where(.layout-fashion) .cm-project:nth-child(4n + 2) .cm-stack { aspect-ratio: 3 / 4; }
-:where(.layout-fashion) .cm-project:nth-child(4n + 3) .cm-stack { aspect-ratio: 2 / 3; }
-:where(.layout-fashion) .cm-project:nth-child(4n + 4) .cm-stack { aspect-ratio: 4 / 5; }
-
-/* CAMPAIGNS · three-step. The largest frames, offset by one narrow upright
-   so a row never resolves into a tidy pair. */
-:where(.layout-campaigns) .cm-project:nth-child(3n + 1) { grid-column: 1 / span 7; margin-top: 0; }
-:where(.layout-campaigns) .cm-project:nth-child(3n + 2) { grid-column: 9 / span 4; margin-top: 150px; }
-:where(.layout-campaigns) .cm-project:nth-child(3n + 3) { grid-column: 4 / span 6; margin-top: 60px; }
-
-:where(.layout-campaigns) .cm-project:nth-child(3n + 1) .cm-stack { aspect-ratio: 16 / 10; }
-:where(.layout-campaigns) .cm-project:nth-child(3n + 2) .cm-stack { aspect-ratio: 3 / 4; }
-:where(.layout-campaigns) .cm-project:nth-child(3n + 3) .cm-stack { aspect-ratio: 5 / 4; }
-
-/* DIRECTING · four-step. Wide frames pulled from a reel, scattered rather
-   than paired, with one upright still breaking the run of landscapes. */
-:where(.layout-directing) .cm-project:nth-child(4n + 1) { grid-column: 1 / span 6;  margin-top: 0; }
-:where(.layout-directing) .cm-project:nth-child(4n + 2) { grid-column: 8 / span 5;  margin-top: 135px; }
-:where(.layout-directing) .cm-project:nth-child(4n + 3) { grid-column: 3 / span 7;  margin-top: 55px; }
-:where(.layout-directing) .cm-project:nth-child(4n + 4) { grid-column: 2 / span 4;  margin-top: 0; }
-
-:where(.layout-directing) .cm-project:nth-child(4n + 1) .cm-stack { aspect-ratio: 16 / 9; }
-:where(.layout-directing) .cm-project:nth-child(4n + 2) .cm-stack { aspect-ratio: 16 / 10; }
-:where(.layout-directing) .cm-project:nth-child(4n + 3) .cm-stack { aspect-ratio: 16 / 9; }
-:where(.layout-directing) .cm-project:nth-child(4n + 4) .cm-stack { aspect-ratio: 4 / 5; }
-
+/* ---- Grid ----
+   One uniform, aligned grid for every category. Same column count, same crop,
+   same gutters — the photography carries the page, the layout stays quiet. */
 .cm-stack {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 5;   /* overridden per slot by the rhythm above */
+  aspect-ratio: 4 / 5;
   overflow: hidden;
   background: #efece7;
 }
@@ -440,22 +338,6 @@ body, html {
 
 .cm-project:hover .cm-caption::before { right: 0; }
 
-/* Even slots hang their caption off the right edge — rule draws that way too.
-   Only on the asymmetric layouts; the even grids keep every caption flush left
-   so the columns stay readable. */
-.cm-project:nth-child(even) .cm-caption {
-  align-items: flex-end;
-  text-align: right;
-}
-
-.cm-project:nth-child(even) .cm-caption::before {
-  left: 100%;
-  right: 0;
-  transition: left 0.65s cubic-bezier(0.2, 0, 0.2, 1);
-}
-
-.cm-project:nth-child(even):hover .cm-caption::before { left: 0; }
-
 .cm-title {
   font-size: 12px;
   font-weight: 500;
@@ -472,26 +354,16 @@ body, html {
   white-space: nowrap;
 }
 
-/* Tablet: one shared four-step rhythm replaces all five. These selectors
-   carry real specificity while the desktop rules sit inside :where(), so this
-   single pass overrides every category. Crops are left alone, which is what
-   keeps the categories distinguishable at this width. */
 @media (max-width: 1000px) {
-  .commercial-gallery { grid-template-columns: repeat(8, 1fr); row-gap: 32px; }
-  .commercial-gallery .cm-project:nth-child(4n + 1) { grid-column: 1 / span 5; margin-top: 0; }
-  .commercial-gallery .cm-project:nth-child(4n + 2) { grid-column: 6 / span 3; margin-top: 90px; }
-  .commercial-gallery .cm-project:nth-child(4n + 3) { grid-column: 2 / span 4; margin-top: 40px; }
-  .commercial-gallery .cm-project:nth-child(4n + 4) { grid-column: 6 / span 3; margin-top: 0; }
+  .commercial-gallery { grid-template-columns: repeat(2, 1fr); row-gap: 52px; }
 }
 
 @media (max-width: 900px) {
   .commercial-nav { width: 100%; overflow-x: auto; padding-bottom: 6px; }
 }
 
-/* Phone: one column, full width, offsets off — the crop variety carries it. */
 @media (max-width: 640px) {
-  .commercial-gallery { grid-template-columns: 1fr; row-gap: 48px; padding-top: 56px; }
-  .commercial-gallery .cm-project[class] { grid-column: 1 / -1; margin-top: 0; }
+  .commercial-gallery { grid-template-columns: 1fr; row-gap: 44px; padding-top: 48px; }
 }
 
 /* Commercial contact panel */
@@ -992,7 +864,6 @@ body, html {
 #acc-weddings .weddings-logo {
   font-family: 'Radiant Charisma', 'Cormorant Garamond', serif;
 }
-
 
 /* ==========================================================
    STANDALONE COMMERCIAL PAGE (commercial.html)

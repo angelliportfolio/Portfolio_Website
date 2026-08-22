@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Curate — Angelli Productions</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Be Vietnam Pro',sans-serif;background:#f6f4f1;color:#1a1a1a;padding-bottom:120px}
+  header{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid #e4dfd8;
+         padding:18px 26px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+  h1{font-size:15px;letter-spacing:.18em;text-transform:uppercase;font-weight:600}
+  .hint{font-size:12px;color:#888;line-height:1.6;flex:1;min-width:260px}
+  button{font-family:inherit;cursor:pointer;border:none;border-radius:2px}
+  .save{background:#1a1a1a;color:#fff;padding:12px 26px;font-size:11px;letter-spacing:.2em;text-transform:uppercase}
+  .save:disabled{opacity:.4;cursor:default}
+  #status{font-size:12px;color:#666;min-width:150px}
+  .proj{background:#fff;border:1px solid #e4dfd8;margin:22px 26px;border-radius:3px}
+  .phead{display:flex;align-items:center;gap:14px;padding:14px 18px;border-bottom:1px solid #efeae3;flex-wrap:wrap}
+  .phead input[type=text]{font-family:inherit;font-size:14px;font-weight:500;border:1px solid transparent;
+        background:#f6f4f1;padding:7px 10px;border-radius:2px;width:190px}
+  .phead select{font-family:inherit;font-size:12px;padding:7px 9px;border:1px solid #ddd6cd;background:#fff;border-radius:2px}
+  .count{font-size:11px;color:#999;letter-spacing:.1em;margin-left:auto}
+  .star{display:flex;align-items:center;gap:7px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#666}
+  .star input{width:16px;height:16px;accent-color:#1a1a1a}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:10px;padding:16px 18px}
+  .cell{position:relative;cursor:pointer;border-radius:2px;overflow:hidden;background:#eee;aspect-ratio:4/5}
+  .cell img{width:100%;height:100%;object-fit:cover;display:block;transition:opacity .2s,filter .2s}
+  .cell.off img{opacity:.28;filter:grayscale(1)}
+  .cell .tick{position:absolute;top:6px;left:6px;width:19px;height:19px;border-radius:50%;
+       background:#1a1a1a;color:#fff;font-size:11px;line-height:19px;text-align:center}
+  .cell.off .tick{background:rgba(255,255,255,.85);color:#bbb}
+  .cell .mk{position:absolute;bottom:6px;left:6px;right:6px;font-size:9px;letter-spacing:.12em;
+       text-transform:uppercase;background:rgba(0,0,0,.62);color:#fff;padding:4px 0;text-align:center;
+       opacity:0;transition:opacity .2s}
+  .cell:hover .mk{opacity:1}
+  .cell.cover{outline:3px solid #1a1a1a;outline-offset:-3px}
+  .cell.cover .mk{opacity:1;background:#1a1a1a}
+  .bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e4dfd8;
+       padding:14px 26px;display:flex;gap:16px;align-items:center;z-index:50}
+  .tot{font-size:12px;color:#666}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Curate</h1>
+  <p class="hint">Click a photo to include or exclude it. Hover and hit <strong>Cover</strong> to make it the thumbnail.
+     Tick <strong>Selected</strong> to put a project on the front page. Then Save — it writes straight to the live site.</p>
+  <span id="status"></span>
+  <button class="save" id="save">Save to site</button>
+</header>
+
+<div id="app"></div>
+
+<div class="bar">
+  <span class="tot" id="tot"></span>
+  <span style="flex:1"></span>
+  <button class="save" id="save2">Save to site</button>
+</div>
+
+<script src="gallery-data.js"></script>
+<script>
+const CATS = ['campaigns','product','beauty','fashion'];
+// Deep copy so editing here never mutates the loaded config.
+const data = JSON.parse(JSON.stringify(COMMERCIAL_PROJECTS)).map(p => ({
+  title:p.title, client:p.client||'', year:p.year||'', category:p.category,
+  featured:!!p.featured,
+  images:p.images.map((src,i) => ({src, on:true, cover:i===0}))
+}));
+
+const app = document.getElementById('app');
+
+function totals(){
+  const ph = data.filter(p=>p.images.some(i=>i.on)).length;
+  const im = data.reduce((n,p)=>n+p.images.filter(i=>i.on).length,0);
+  const ft = data.filter(p=>p.featured && p.images.some(i=>i.on)).length;
+  document.getElementById('tot').textContent =
+    `${ph} projects · ${im} photos · ${ft} on SELECTED`;
+}
+
+function render(){
+  app.innerHTML='';
+  data.forEach((p,pi)=>{
+    const el=document.createElement('div'); el.className='proj';
+    const on=p.images.filter(i=>i.on).length;
+    el.innerHTML=`
+      <div class="phead">
+        <input type="text" value="${p.title}" data-f="title" data-p="${pi}">
+        <input type="text" value="${p.client}" placeholder="client" data-f="client" data-p="${pi}" style="width:150px">
+        <input type="text" value="${p.year}" placeholder="year" data-f="year" data-p="${pi}" style="width:70px">
+        <select data-f="category" data-p="${pi}">
+          ${CATS.map(c=>`<option value="${c}" ${c===p.category?'selected':''}>${c}</option>`).join('')}
+        </select>
+        <label class="star"><input type="checkbox" data-f="featured" data-p="${pi}" ${p.featured?'checked':''}> Selected</label>
+        <span class="count">${on} / ${p.images.length}</span>
+      </div>
+      <div class="grid">
+        ${p.images.map((im,ii)=>`
+          <div class="cell ${im.on?'':'off'} ${im.cover?'cover':''}" data-p="${pi}" data-i="${ii}">
+            <img loading="lazy" src="${im.src}" alt="">
+            <span class="tick">${im.on?'✓':''}</span>
+            <span class="mk" data-cover="1">${im.cover?'Cover':'Set cover'}</span>
+          </div>`).join('')}
+      </div>`;
+    app.appendChild(el);
+  });
+  totals();
+}
+
+app.addEventListener('click', e=>{
+  const cell=e.target.closest('.cell'); if(!cell) return;
+  const p=+cell.dataset.p, i=+cell.dataset.i;
+  if(e.target.dataset.cover){
+    data[p].images.forEach(im=>im.cover=false);
+    data[p].images[i].cover=true;
+    data[p].images[i].on=true;             // a cover must be included
+  } else {
+    const im=data[p].images[i];
+    if(im.cover && im.on) return;          // don't switch off the cover
+    im.on=!im.on;
+  }
+  render();
+});
+
+app.addEventListener('input', e=>{
+  const f=e.target.dataset.f; if(!f) return;
+  const p=+e.target.dataset.p;
+  data[p][f] = e.target.type==='checkbox' ? e.target.checked : e.target.value;
+  totals();
+});
+
+async function save(){
+  const btns=[document.getElementById('save'),document.getElementById('save2')];
+  btns.forEach(b=>b.disabled=true);
+  const st=document.getElementById('status'); st.textContent='Saving…';
+  const out=data.map(p=>{
+    const imgs=p.images.slice().sort((a,b)=>(b.cover?1:0)-(a.cover?1:0));
+    return {title:p.title, client:p.client, year:p.year, category:p.category,
+            featured:p.featured, images:imgs.filter(i=>i.on).map(i=>i.src)};
+  }).filter(p=>p.images.length);
+  try{
+    const r=await fetch('/save',{method:'POST',headers:{'Content-Type':'application/json'},
+                                body:JSON.stringify(out)});
+    const t=await r.text();
+    if(!r.ok) throw new Error(t);
+    st.textContent='Saved — reload the site to see it.';
+  }catch(err){ st.textContent='Failed: '+err.message; }
+  btns.forEach(b=>b.disabled=false);
+}
+document.getElementById('save').onclick=save;
+document.getElementById('save2').onclick=save;
+
+render();
+</script>
+</body>
+</html>
