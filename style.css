@@ -269,6 +269,8 @@ body, html {
 /* Gutters vary with the rhythm — beauty packs tighter, fashion breathes. */
 .layout-beauty { column-gap: 1.8vw; row-gap: 34px; }
 .layout-fashion { column-gap: 2.4vw; row-gap: 48px; }
+.layout-nails { column-gap: 1.9vw; row-gap: 42px; }
+.layout-product { column-gap: 2.6vw; row-gap: 60px; }
 .layout-advertising { row-gap: 56px; }
 .layout-directing { column-gap: 2vw; row-gap: 52px; }
 
@@ -314,6 +316,32 @@ body, html {
 :where(.layout-beauty) .cm-project:nth-child(6n + 4) .cm-stack { aspect-ratio: 1 / 1; }
 :where(.layout-beauty) .cm-project:nth-child(6n + 5) .cm-stack { aspect-ratio: 4 / 5; }
 :where(.layout-beauty) .cm-project:nth-child(6n + 6) .cm-stack { aspect-ratio: 3 / 4; }
+
+/* PRODUCT · four-step. Cleaner and squarer than the rest — product needs air
+   around it, so the frames sit further apart and crop tighter to the object. */
+:where(.layout-product) .cm-project:nth-child(4n + 1) { grid-column: 1 / span 5;  margin-top: 0; }
+:where(.layout-product) .cm-project:nth-child(4n + 2) { grid-column: 7 / span 5;  margin-top: 115px; }
+:where(.layout-product) .cm-project:nth-child(4n + 3) { grid-column: 2 / span 4;  margin-top: 45px; }
+:where(.layout-product) .cm-project:nth-child(4n + 4) { grid-column: 7 / span 4;  margin-top: 0; }
+
+:where(.layout-product) .cm-project:nth-child(4n + 1) .cm-stack { aspect-ratio: 4 / 5; }
+:where(.layout-product) .cm-project:nth-child(4n + 2) .cm-stack { aspect-ratio: 1 / 1; }
+:where(.layout-product) .cm-project:nth-child(4n + 3) .cm-stack { aspect-ratio: 3 / 4; }
+:where(.layout-product) .cm-project:nth-child(4n + 4) .cm-stack { aspect-ratio: 4 / 5; }
+
+/* NAILS · five-step. Hands and nail art are the subject, so frames run tall
+   and sit closer together than product — more like a lookbook than a spread. */
+:where(.layout-nails) .cm-project:nth-child(5n + 1) { grid-column: 1 / span 4;  margin-top: 0; }
+:where(.layout-nails) .cm-project:nth-child(5n + 2) { grid-column: 6 / span 3;  margin-top: 120px; }
+:where(.layout-nails) .cm-project:nth-child(5n + 3) { grid-column: 10 / span 3; margin-top: 20px; }
+:where(.layout-nails) .cm-project:nth-child(5n + 4) { grid-column: 2 / span 5;  margin-top: 60px; }
+:where(.layout-nails) .cm-project:nth-child(5n + 5) { grid-column: 8 / span 4;  margin-top: 0; }
+
+:where(.layout-nails) .cm-project:nth-child(5n + 1) .cm-stack { aspect-ratio: 2 / 3; }
+:where(.layout-nails) .cm-project:nth-child(5n + 2) .cm-stack { aspect-ratio: 3 / 4; }
+:where(.layout-nails) .cm-project:nth-child(5n + 3) .cm-stack { aspect-ratio: 3 / 4; }
+:where(.layout-nails) .cm-project:nth-child(5n + 4) .cm-stack { aspect-ratio: 4 / 5; }
+:where(.layout-nails) .cm-project:nth-child(5n + 5) .cm-stack { aspect-ratio: 2 / 3; }
 
 /* FASHION · four-step. The longest drops on the site — two per row with one
    always hanging far below the other, so the page reads lean and vertical. */
@@ -964,3 +992,44 @@ body, html {
 #acc-weddings .weddings-logo {
   font-family: 'Radiant Charisma', 'Cormorant Garamond', serif;
 }
+
+
+/* ==========================================================
+   STANDALONE COMMERCIAL PAGE (commercial.html)
+   Same grid and type as the Commercial panel, minus the accordion
+   shell and the hero — this page is only the commercial portfolio.
+   ========================================================== */
+
+body.standalone {
+  background: #fff;
+  font-family: 'Be Vietnam Pro', sans-serif;
+}
+
+body.standalone * { font-family: 'Be Vietnam Pro', sans-serif; }
+
+.standalone-bar {
+  padding: 34px 5% 0;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #a09a92;
+}
+
+.standalone-bar a { color: #a09a92; text-decoration: none; border-bottom: 1px solid #ddd6cd; padding-bottom: 3px; }
+.standalone-bar a:hover { color: #1a1a1a; border-bottom-color: #1a1a1a; }
+
+.standalone-foot {
+  border-top: 1px solid #ece8e2;
+  padding: 40px 5% 70px;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #a09a92;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 26px;
+  justify-content: space-between;
+}
+
+.standalone-foot a { color: #a09a92; text-decoration: none; }
+.standalone-foot a:hover { color: #1a1a1a; }

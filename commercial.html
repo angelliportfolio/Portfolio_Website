@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Angelli Nguyen | Commercial + Product Photography</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Commercial portfolio of Angelli Nguyen — product, beauty, fashion and advertising photography. Colorado based, available worldwide.">
+  <link rel="stylesheet" href="style.css?v=14">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100;200;300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body class="standalone">
+
+<div class="standalone-bar">Commercial &amp; Product Portfolio</div>
+
+<header class="commercial-header">
+  <div class="logo-block">
+    <h2>ANGELLI NGUYEN</h2>
+    <span>PHOTOGRAPHER - DIRECTOR</span>
+  </div>
+  <nav class="commercial-nav">
+    <button class="cm-nav-link active" data-cat="home">SELECTED</button>
+    <button class="cm-nav-link" data-cat="nails">NAILS</button>
+    <button class="cm-nav-link" data-cat="product">PRODUCT</button>
+    <button class="cm-nav-link" data-cat="beauty">BEAUTY</button>
+    <button class="cm-nav-link" data-cat="advertising">CAMPAIGNS</button>
+    <button class="cm-nav-link" data-cat="contact">CONTACT</button>
+  </nav>
+</header>
+
+<!-- Gallery panel (populated from gallery-data.js) -->
+<div class="commercial-gallery layout-home" id="commercialGallery"></div>
+
+<!-- Contact panel -->
+<div class="commercial-contact" id="commercialContact" hidden>
+  <div class="contact-grid">
+    <div class="contact-intro">
+      <h2 class="panel-title">Let's make something.</h2>
+      <p class="body-text">Product, beauty, and brand campaigns — on location or in studio, Colorado based and available worldwide.</p>
+      <p class="body-text">For commissions, rates, and availability, send a note. I respond to every serious inquiry.</p>
+      <a class="contact-email-link" href="#">Email directly &rarr;</a>
+    </div>
+    <form class="contact-form" id="commercialForm">
+      <label>Name<input type="text" name="name" required></label>
+      <label>Email<input type="email" name="email" required></label>
+      <label>Brand / Company<input type="text" name="company"></label>
+      <label>Project type
+        <select name="project">
+          <option value="Product">Product</option>
+          <option value="Beauty">Beauty</option>
+          <option value="Fashion">Fashion</option>
+          <option value="Advertising">Advertising</option>
+          <option value="Directing">Directing</option>
+          <option value="Other">Other</option>
+        </select>
+      </label>
+      <label>Message<textarea name="message" rows="4" required></textarea></label>
+      <button type="submit" class="contact-submit">SEND INQUIRY</button>
+      <p class="form-status" id="commercialFormStatus" aria-live="polite"></p>
+    </form>
+  </div>
+</div>
+
+<footer class="standalone-foot">
+  <span>Angelli Nguyen — Colorado based, available worldwide</span>
+  <span><a href="index.html">Full portfolio &rarr;</a></span>
+</footer>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" hidden>
+  <button class="lb-close" id="lbClose" aria-label="Close">&times;</button>
+  <button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous">&#8249;</button>
+  <figure class="lb-stage">
+    <img id="lbImage" src="" alt="">
+    <figcaption class="lb-counter" id="lbCounter"></figcaption>
+  </figure>
+  <button class="lb-nav lb-next" id="lbNext" aria-label="Next">&#8250;</button>
+</div>
+
+<script src="gallery-data.js?v=14"></script>
+<script src="main.js?v=14"></script>
+</body>
+</html>
