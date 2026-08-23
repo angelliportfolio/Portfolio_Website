@@ -7,11 +7,14 @@ POST /save from curate.html, which rewrites gallery-data.js in place.
     python3 serve.py        # then open http://localhost:8765
 """
 import http.server, socketserver, json, io, os, shutil, datetime
-import imgtools
+import imgtools, scanner, glob, re
 
 PORT = 8765
 ROOT = os.path.dirname(os.path.abspath(__file__))
 CATS = ('campaigns', 'product', 'beauty', 'fashion')
+IMG_EXT = ('.jpg', '.jpeg', '.png', '.tif', '.tiff', '.webp')
+DRIVE = '/Volumes/Samsung_T7_4TB'
+DRIVE_BASES = [DRIVE, os.path.join(DRIVE, 'Angelli Social', 'content')]
 
 HEADER = '''/* ============================================================
    ANGELLI PRODUCTIONS — Commercial Work
@@ -76,7 +79,89 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self.send_header('Expires', '0')
         super().end_headers()
 
+    def do_GET(self):
+        if self.path.split('?')[0].rstrip('/') == '/folders':
+            try:
+                man = json.load(io.open(os.path.join(ROOT, 'curate-manifest.json'),
+                                        encoding='utf-8'))
+                used = {os.path.normpath(ph['src']).rsplit('/content/', 1)[-1].split('/')[0]
+                        for p in man for ph in p['photos'][:1]}
+                found = scanner.shoots(DRIVE_BASES)
+                for f in found:
+                    f['already'] = f['name'] in used
+                body = json.dumps(found).encode()
+                self.send_response(200)
+                self.send_header('Content-Type', 'application/json')
+                self.send_header('Cache-Control', 'no-store')
+                self.send_header('Content-Length', str(len(body)))
+                self.end_headers()
+                self.wfile.write(body)
+            except Exception as e:
+                self.send_error(500, str(e))
+            return
+        return super().do_GET()
+
+    def _add_project(self, req):
+        """Thumbnail a chosen source folder and append it to the manifest."""
+        src_dir = req.get('path')
+        title   = (req.get('title') or '').strip()
+        cat     = req.get('category') or 'beauty'
+        if not src_dir or not os.path.isdir(src_dir):
+            raise ValueError('folder not found: %s' % src_dir)
+        if not title:
+            raise ValueError('give the project a title')
+
+        slug = re.sub(r'[^a-z0-9]+', '-', title.lower()).strip('-') or 'project'
+        man_path = os.path.join(ROOT, 'curate-manifest.json')
+        man = json.load(io.open(man_path, encoding='utf-8'))
+        if any(p['slug'] == slug for p in man):
+            raise ValueError('a project called "%s" already exists' % title)
+
+        files = sorted(f for f in glob.glob(os.path.join(src_dir, '*'))
+                       if f.lower().endswith(IMG_EXT))
+        if not files:
+            raise ValueError('no images directly in that folder')
+        files = files[:400]
+
+        os.makedirs(os.path.join(ROOT, 'images/_thumbs', slug), exist_ok=True)
+        photos = []
+        for i, src in enumerate(files, 1):
+            name  = '%s-%03d.jpg' % (slug, i)
+            thumb = 'images/_thumbs/%s/%s' % (slug, name)
+            full  = os.path.join(ROOT, thumb)
+            if not os.path.exists(full):
+                try:
+                    imgtools.save_thumb(src, full)
+                except Exception:
+                    continue
+            photos.append({'src': src, 'thumb': thumb,
+                           'ai': os.path.basename(src).startswith(('hf_', 'Gemini_Generated')),
+                           'web': 'images/commercial/%s/%s' % (slug, name)})
+        if not photos:
+            raise ValueError('could not read any images in that folder')
+
+        man.append({'slug': slug, 'title': title, 'client': req.get('client', ''),
+                    'category': cat, 'photos': photos})
+        io.open(man_path, 'w', encoding='utf-8').write(json.dumps(man, indent=1))
+        return 'Added "%s" with %d photos. Reload to pick from it.' % (title, len(photos))
+
     def do_POST(self):
+        if self.path.rstrip('/') == '/add-project':
+            try:
+                n = int(self.headers.get('Content-Length', 0))
+                msg = self._add_project(json.loads(self.rfile.read(n).decode('utf-8')))
+                body = msg.encode(); code = 200
+                print('[add]', msg)
+            except Exception as e:
+                body = str(e).encode(); code = 400
+                print('[add] FAILED:', e)
+            self.send_response(code)
+            self.send_header('Content-Type', 'text/plain; charset=utf-8')
+            self.send_header('Content-Length', str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+            return
+
         if self.path.rstrip('/') != '/save':
             self.send_error(404); return
         try:

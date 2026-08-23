@@ -57,6 +57,30 @@
   .newtag{font-size:9px;letter-spacing:.14em;text-transform:uppercase;background:#1a1a1a;
         color:#fff;padding:3px 7px;border-radius:2px}
   .filter{display:flex;align-items:center;gap:6px;font-size:11px;color:#666}
+  .addbtn{background:#fff;border:1px solid #1a1a1a;color:#1a1a1a;padding:11px 20px;
+        font-size:11px;letter-spacing:.2em;text-transform:uppercase}
+  .modal{position:fixed;inset:0;background:rgba(20,18,16,.55);z-index:90;display:none;
+        align-items:flex-start;justify-content:center;padding:50px 20px;overflow:auto}
+  .modal.open{display:flex}
+  .sheet{background:#fff;border-radius:4px;max-width:820px;width:100%;padding:22px}
+  .sheet h3{font-size:13px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:6px}
+  .sheet p.sub{font-size:12px;color:#7a7a7a;margin-bottom:16px;line-height:1.6}
+  .flist{max-height:52vh;overflow:auto;border:1px solid #eee7de;border-radius:3px}
+  .frow{display:flex;align-items:center;gap:12px;padding:10px 12px;border-bottom:1px solid #f2ece4;
+        font-size:13px;cursor:pointer}
+  .frow:hover{background:#faf8f5}
+  .frow.sel{background:#f1ece4}
+  .frow.dim{opacity:.45}
+  .frow .nm{flex:1}
+  .frow .ct{font-size:11px;color:#999}
+  .frow .tag{font-size:9px;letter-spacing:.12em;text-transform:uppercase;background:#eee;
+        color:#777;padding:2px 6px;border-radius:2px}
+  .fopts{padding:12px;background:#faf8f5;border-top:1px solid #f2ece4}
+  .fopts label{font-size:11px;color:#777;display:block;margin-bottom:5px;letter-spacing:.1em;text-transform:uppercase}
+  .fopts select,.fopts input{font-family:inherit;font-size:13px;padding:8px 9px;border:1px solid #ddd6cd;
+        border-radius:2px;background:#fff;width:100%;margin-bottom:10px}
+  .frow .aitag{background:#be3c28;color:#fff}
+  .rowbtns{display:flex;gap:10px;justify-content:flex-end;margin-top:14px}
 
   .bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e4dfd8;
        padding:13px 24px;display:flex;gap:14px;align-items:center;z-index:60}
@@ -73,10 +97,39 @@
      Projects with nothing chosen are dimmed — pick any photo to add them to the site.
      Frames marked <b style="color:#be3c28">AI</b> are generator output, not photographs.</p>
   <span id="status"></span>
+  <button class="addbtn" id="addBtn">+ Add project</button>
   <button class="save" id="save">Save to site</button>
 </header>
 
 <div id="app"></div>
+
+<div class="modal" id="modal">
+  <div class="sheet">
+    <h3>Add a project</h3>
+    <p class="sub">Every shoot folder on the drive. Pick one, choose which subfolder holds the
+       finished photos, and it joins the picker so you can select from it.
+       Folders already in the picker are dimmed.</p>
+    <div class="flist" id="flist">Scanning the drive…</div>
+    <div class="fopts" id="fopts" style="display:none">
+      <label>Which folder holds the finals</label>
+      <select id="fsub"></select>
+      <label>Project title</label>
+      <input type="text" id="ftitle" placeholder="e.g. Rare Beauty">
+      <label>Category</label>
+      <select id="fcat">
+        <option value="campaigns">campaigns</option>
+        <option value="product">product</option>
+        <option value="beauty" selected>beauty</option>
+        <option value="fashion">fashion</option>
+      </select>
+    </div>
+    <div class="rowbtns">
+      <span id="addStatus" style="flex:1;font-size:12px;color:#777"></span>
+      <button class="ghost" id="addCancel">Cancel</button>
+      <button class="save" id="addGo">Add project</button>
+    </div>
+  </div>
+</div>
 
 <div class="bar">
   <span class="tot" id="tot"></span>
@@ -236,6 +289,58 @@ async function save(){
 }
 document.getElementById('save').onclick=save;
 document.getElementById('save2').onclick=save;
+
+/* ---- Add project ---- */
+const modal=document.getElementById('modal');
+let folders=[], picked=null;
+
+document.getElementById('addBtn').onclick=async()=>{
+  modal.classList.add('open');
+  const list=document.getElementById('flist');
+  list.textContent='Scanning the drive…';
+  document.getElementById('fopts').style.display='none';
+  document.getElementById('addStatus').textContent='';
+  try{
+    folders=await (await fetch('/folders')).json();
+  }catch(e){ list.textContent='Could not read the drive: '+e.message; return; }
+  list.innerHTML=folders.map((f,i)=>`
+    <div class="frow ${f.already?'dim':''}" data-i="${i}">
+      <span class="nm">${f.name}</span>
+      ${f.already?'<span class="tag">already added</span>':''}
+      <span class="ct">${f.total} images</span>
+    </div>`).join('') || 'No folders found.';
+};
+document.getElementById('addCancel').onclick=()=>modal.classList.remove('open');
+modal.addEventListener('click',e=>{ if(e.target===modal) modal.classList.remove('open'); });
+
+document.getElementById('flist').addEventListener('click',e=>{
+  const row=e.target.closest('.frow'); if(!row) return;
+  document.querySelectorAll('.frow').forEach(r=>r.classList.remove('sel'));
+  row.classList.add('sel');
+  picked=folders[+row.dataset.i];
+  const sub=document.getElementById('fsub');
+  sub.innerHTML=picked.options.map(o=>
+    `<option value="${o.path}">${o.rel} — ${o.count} images${o.ai?'  (AI tool output)':''}</option>`).join('');
+  document.getElementById('ftitle').value =
+    picked.name.replace(/^[0-9.]+_/,'').replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+  document.getElementById('fopts').style.display='block';
+});
+
+document.getElementById('addGo').onclick=async()=>{
+  if(!picked){ document.getElementById('addStatus').textContent='Pick a folder first.'; return; }
+  const st=document.getElementById('addStatus');
+  st.textContent='Building thumbnails…';
+  try{
+    const r=await fetch('/add-project',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({path:document.getElementById('fsub').value,
+                           title:document.getElementById('ftitle').value,
+                           category:document.getElementById('fcat').value})});
+    const t=await r.text();
+    if(!r.ok) throw new Error(t);
+    st.textContent=t;
+    setTimeout(()=>{ modal.classList.remove('open'); location.reload(); }, 900);
+  }catch(err){ st.textContent='Failed: '+err.message; }
+};
 
 boot();
 </script>
