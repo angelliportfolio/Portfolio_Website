@@ -5,7 +5,7 @@
   <title>Angelli Nguyen | Commercial + Product Photography</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Commercial portfolio of Angelli Nguyen — product, beauty, fashion and advertising photography. Colorado based, available worldwide.">
-  <link rel="stylesheet" href="style.css?v=22">
+  <link rel="stylesheet" href="style.css?v=23">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100;200;300;400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
@@ -34,83 +34,69 @@
 
 <!-- Contact panel -->
 <div class="commercial-contact" id="commercialContact" hidden>
-  <div class="contact-grid">
-    <div class="contact-intro">
-      <figure class="contact-portrait">
-        <img src="images/site/headshot.jpg" alt="Angelli Nguyen, photographer and director" loading="lazy" decoding="async">
-        <figcaption>Angelli Nguyen</figcaption>
-      </figure>
+  <div class="contact-split">
+
+    <figure class="contact-portrait">
+      <img src="images/site/headshot.jpg" alt="Angelli Nguyen, photographer and director" loading="lazy" decoding="async">
+      <figcaption>
+        <span class="cp-name">Angelli Nguyen</span>
+        <span class="cp-role">Photographer &middot; Director</span>
+      </figcaption>
+    </figure>
+
+    <div class="contact-panel">
       <h2 class="panel-title">Let's make something.</h2>
       <p class="body-text">Product, beauty, and brand campaigns &mdash; on location or in studio.
-         Colorado based, available worldwide, and used to travelling for a shoot day.</p>
+         Colorado based, available worldwide.</p>
+      <p class="body-text">Send dates, what you need delivered, where the images will run and a
+         budget range. Even rough answers let me come back with something useful. I reply to
+         every serious enquiry within two business days.</p>
 
-      <h3 class="contact-sub">What I shoot</h3>
-      <ul class="contact-list">
-        <li><span>Product &amp; still life</span><em>Bottles, compacts, texture, hands</em></li>
-        <li><span>Beauty</span><em>Skin, colour, close-up campaign work</em></li>
-        <li><span>Campaign &amp; advertising</span><em>Concept through to delivery</em></li>
-        <li><span>Fashion &amp; editorial</span><em>Studio, location, lookbook</em></li>
-        <li><span>Directing</span><em>Motion alongside stills, same shoot day</em></li>
-      </ul>
-
-      <h3 class="contact-sub">Worth including in your first note</h3>
-      <p class="body-text">Shoot dates or the window you're working toward, what you need delivered
-         and how many finals, where the images will run and for how long, and a budget range.
-         Even rough answers let me come back with something useful instead of more questions.</p>
-
-      <h3 class="contact-sub">How it usually goes</h3>
-      <ol class="contact-steps">
-        <li>You send the brief &mdash; I reply within two business days</li>
-        <li>A call to talk through references, crew and locations</li>
-        <li>Treatment and quote, with usage spelled out</li>
-        <li>Shoot day, then selects within a week and finals on the agreed date</li>
-      </ol>
+      <form class="contact-form" id="commercialForm">
+        <div class="field-row">
+          <label>Name<input type="text" name="name" required></label>
+          <label>Brand / Company<input type="text" name="company"></label>
+        </div>
+        <label>Email<input type="email" name="email" required></label>
+        <label>Project type
+          <select name="project">
+            <option value="Product">Product &amp; still life</option>
+            <option value="Beauty">Beauty</option>
+            <option value="Campaign">Campaign &amp; advertising</option>
+            <option value="Fashion">Fashion &amp; editorial</option>
+            <option value="Directing">Directing</option>
+            <option value="Other">Something else</option>
+          </select>
+        </label>
+        <div class="field-row">
+          <label>Shoot dates<input type="text" name="dates" placeholder="or the window you're aiming for"></label>
+          <label>Budget range
+            <select name="budget">
+              <option value="">Prefer not to say</option>
+              <option value="Under $2.5k">Under $2,500</option>
+              <option value="$2.5k-5k">$2,500 &ndash; $5,000</option>
+              <option value="$5k-10k">$5,000 &ndash; $10,000</option>
+              <option value="$10k-25k">$10,000 &ndash; $25,000</option>
+              <option value="$25k+">$25,000+</option>
+            </select>
+          </label>
+        </div>
+        <label>Where will the images run?<input type="text" name="usage" placeholder="social, web, print, paid media"></label>
+        <label>Tell me about the project<textarea name="message" rows="4" required></textarea></label>
+        <button type="submit" class="contact-submit">SEND INQUIRY</button>
+        <p class="form-status" id="commercialFormStatus" aria-live="polite"></p>
+        <p class="form-fineprint">Sending opens your email app with the details filled in.
+           If nothing happens, write to
+           <a href="mailto:inquiries@angelliproductions.com">inquiries@angelliproductions.com</a> directly.</p>
+      </form>
 
       <div class="contact-direct">
         <span class="contact-label">Direct</span>
         <a class="contact-email-link" id="mailLink" href="mailto:inquiries@angelliproductions.com">inquiries@angelliproductions.com</a>
         <button type="button" class="copy-btn" id="copyMail">Copy</button>
       </div>
-      <p class="contact-note">Based in Colorado &middot; shooting worldwide &middot; film &amp; digital</p>
     </div>
 
-    <form class="contact-form" id="commercialForm">
-      <div class="field-row">
-        <label>Name<input type="text" name="name" required></label>
-        <label>Brand / Company<input type="text" name="company"></label>
-      </div>
-      <label>Email<input type="email" name="email" required></label>
-      <label>Project type
-        <select name="project">
-          <option value="Product">Product &amp; still life</option>
-          <option value="Beauty">Beauty</option>
-          <option value="Campaign">Campaign &amp; advertising</option>
-          <option value="Fashion">Fashion &amp; editorial</option>
-          <option value="Directing">Directing</option>
-          <option value="Other">Something else</option>
-        </select>
-      </label>
-      <div class="field-row">
-        <label>Shoot dates<input type="text" name="dates" placeholder="or the window you're aiming for"></label>
-        <label>Budget range
-          <select name="budget">
-            <option value="">Prefer not to say</option>
-            <option value="Under $2.5k">Under $2,500</option>
-            <option value="$2.5k-5k">$2,500 &ndash; $5,000</option>
-            <option value="$5k-10k">$5,000 &ndash; $10,000</option>
-            <option value="$10k-25k">$10,000 &ndash; $25,000</option>
-            <option value="$25k+">$25,000+</option>
-          </select>
-        </label>
-      </div>
-      <label>Where will the images run?<input type="text" name="usage" placeholder="social, web, print, paid media &mdash; and for how long"></label>
-      <label>Tell me about the project<textarea name="message" rows="5" required></textarea></label>
-      <button type="submit" class="contact-submit">SEND INQUIRY</button>
-      <p class="form-status" id="commercialFormStatus" aria-live="polite"></p>
-      <p class="form-fineprint">Sending opens your email app with the details filled in.
-         If nothing happens, write to
-         <a href="mailto:inquiries@angelliproductions.com">inquiries@angelliproductions.com</a> directly.</p>
-    </form>
   </div>
 </div>
 
@@ -151,7 +137,7 @@
     });
   });
 </script>
-<script src="gallery-data.js?v=22"></script>
-<script src="main.js?v=22"></script>
+<script src="gallery-data.js?v=23"></script>
+<script src="main.js?v=23"></script>
 </body>
 </html>
