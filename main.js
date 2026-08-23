@@ -93,6 +93,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const pad = n => String(n).padStart(2, '0');
 
+  /* GitHub Pages throttles bursts, and a throttled <img> fails permanently —
+     the browser shows alt text and never tries again. Retry a couple of times
+     with a short backoff so a transient 503 doesn't leave a hole in the grid. */
+  function withRetry(img, src) {
+    let tries = 0;
+    img.addEventListener('error', () => {
+      if (tries >= 2) return;
+      tries++;
+      setTimeout(() => { img.src = src + '?r=' + tries; }, 400 * tries);
+    });
+    img.src = src;
+  }
+
   /* Builds one project tile. Only the cover image is in the DOM up front —
      the rest of the set is injected the first time you hover, so a page of
      thumbnails costs one request each instead of the whole archive. */
@@ -109,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const meta = [sameAsTitle ? '' : client, project.year].filter(Boolean).join(' · ');
     tile.innerHTML = `
       <div class="cm-stack">
-        <img class="is-shown" loading="lazy" decoding="async" src="${shots[0].src}" alt="${shots[0].alt}">
+        <img class="is-shown" loading="lazy" decoding="async" alt="${shots[0].alt}">
         <span class="cm-count">01 / ${pad(shots.length)}</span>
       </div>
       <figcaption class="cm-caption">
@@ -119,6 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const stack = tile.querySelector('.cm-stack');
     const count = tile.querySelector('.cm-count');
+    withRetry(stack.querySelector('img'), shots[0].src);
     let timer = null;
     let idx = 0;
     let built = false;
@@ -138,8 +152,8 @@ document.addEventListener('DOMContentLoaded', () => {
           const img = document.createElement('img');
           img.loading = 'lazy';
           img.decoding = 'async';
-          img.src = s.src;
           img.alt = s.alt;
+          withRetry(img, s.src);
           stack.insertBefore(img, count);
         });
       }
@@ -219,8 +233,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!currentSet.length) return;
     lbIndex = (i + currentSet.length) % currentSet.length;
     const item = currentSet[lbIndex];
-    lbImage.src = item.src;
     lbImage.alt = item.alt;
+    withRetry(lbImage, item.src);
     lbCounter.textContent = (lbIndex + 1) + ' / ' + currentSet.length;
   }
 
