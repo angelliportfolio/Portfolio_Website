@@ -1037,3 +1037,33 @@ body.standalone * { font-family: 'Be Vietnam Pro', sans-serif; }
   .contact-list li { flex-direction: column; gap: 3px; }
   .contact-list em { text-align: left; }
 }
+
+
+/* Portrait sits above the intro — small enough that the capability sheet
+   below it still reads first. */
+.contact-portrait {
+  margin: 0 0 26px;
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+}
+
+.contact-portrait img {
+  width: 132px;
+  height: 132px;
+  object-fit: cover;
+  display: block;
+  background: #efece7;
+}
+
+.contact-portrait figcaption {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #a09a92;
+  padding-bottom: 4px;
+}
+
+@media (max-width: 700px) {
+  .contact-portrait img { width: 108px; height: 108px; }
+}
