@@ -107,21 +107,25 @@
   <div class="sheet">
     <h3>Add a project</h3>
     <p class="sub">Every shoot folder on the drive. Pick one, choose which subfolder holds the
-       finished photos, and it joins the picker so you can select from it.
-       Folders already in the picker are dimmed.</p>
+       finished photos, then either start a new project or add those photos to an existing
+       one — that's how a project draws from several folders. Duplicates are skipped.</p>
     <div class="flist" id="flist">Scanning the drive…</div>
     <div class="fopts" id="fopts" style="display:none">
       <label>Which folder holds the finals</label>
       <select id="fsub"></select>
-      <label>Project title</label>
-      <input type="text" id="ftitle" placeholder="e.g. Rare Beauty">
-      <label>Category</label>
-      <select id="fcat">
-        <option value="campaigns">campaigns</option>
-        <option value="product">product</option>
-        <option value="beauty" selected>beauty</option>
-        <option value="fashion">fashion</option>
-      </select>
+      <label>Add these photos to</label>
+      <select id="ftarget"></select>
+      <div id="newfields">
+        <label>Project title</label>
+        <input type="text" id="ftitle" placeholder="e.g. Rare Beauty">
+        <label>Category</label>
+        <select id="fcat">
+          <option value="campaigns">campaigns</option>
+          <option value="product">product</option>
+          <option value="beauty" selected>beauty</option>
+          <option value="fashion">fashion</option>
+        </select>
+      </div>
     </div>
     <div class="rowbtns">
       <span id="addStatus" style="flex:1;font-size:12px;color:#777"></span>
@@ -197,6 +201,7 @@ function render(){
           <button class="ghost" data-mv="-1" data-p="${pi}">▲</button>
           <button class="ghost" data-mv="1" data-p="${pi}">▼</button>
         </span>
+        <button class="ghost" data-addto="${p.slug}" title="Add photos from another folder">+ folder</button>
         <input type="text" value="${p.title}" data-f="title" data-p="${pi}">
         <input type="text" value="${p.client}" placeholder="client" data-f="client" data-p="${pi}" style="width:140px">
         <input type="text" value="${p.year}" placeholder="year" data-f="year" data-p="${pi}" style="width:64px">
@@ -225,6 +230,7 @@ function render(){
 }
 
 app.addEventListener('click', e=>{
+  if(e.target.dataset.addto){ openAdd(e.target.dataset.addto); return; }
   const mv=e.target.dataset.mv;
   if(mv){ const p=+e.target.dataset.p, t=p+(+mv);
     if(t>=0&&t<data.length){ const [x]=data.splice(p,1); data.splice(t,0,x); render(); }
@@ -294,7 +300,12 @@ document.getElementById('save2').onclick=save;
 const modal=document.getElementById('modal');
 let folders=[], picked=null;
 
-document.getElementById('addBtn').onclick=async()=>{
+function syncTargetFields(){
+  const isNew = document.getElementById('ftarget').value === '';
+  document.getElementById('newfields').style.display = isNew ? 'block' : 'none';
+}
+
+async function openAdd(preTarget){
   modal.classList.add('open');
   const list=document.getElementById('flist');
   list.textContent='Scanning the drive…';
@@ -309,7 +320,15 @@ document.getElementById('addBtn').onclick=async()=>{
       ${f.already?'<span class="tag">already added</span>':''}
       <span class="ct">${f.total} images</span>
     </div>`).join('') || 'No folders found.';
-};
+
+  const tgt=document.getElementById('ftarget');
+  tgt.innerHTML='<option value="">— start a new project —</option>'+
+    data.map(p=>`<option value="${p.slug}">${p.title} (${p.photos.length} photos)</option>`).join('');
+  tgt.value = preTarget || '';
+  tgt.onchange = syncTargetFields;
+  syncTargetFields();
+}
+document.getElementById('addBtn').onclick=()=>openAdd('');
 document.getElementById('addCancel').onclick=()=>modal.classList.remove('open');
 modal.addEventListener('click',e=>{ if(e.target===modal) modal.classList.remove('open'); });
 
@@ -327,12 +346,13 @@ document.getElementById('flist').addEventListener('click',e=>{
 });
 
 document.getElementById('addGo').onclick=async()=>{
-  if(!picked){ document.getElementById('addStatus').textContent='Pick a folder first.'; return; }
+  if(!picked){ document.getElementById('addStatus').textContent='Pick a folder from the list first.'; return; }
   const st=document.getElementById('addStatus');
   st.textContent='Building thumbnails…';
   try{
     const r=await fetch('/add-project',{method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({path:document.getElementById('fsub').value,
+                           target:document.getElementById('ftarget').value,
                            title:document.getElementById('ftitle').value,
                            category:document.getElementById('fcat').value})});
     const t=await r.text();

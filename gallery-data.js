@@ -122,6 +122,48 @@ const COMMERCIAL_PROJECTS = [
   },
 
   {
+    title: "Final Detox",
+    client: "",
+    year: "",
+    category: "product",
+    images: [
+      "images/commercial/final-detox/final-detox-002.jpg",
+      "images/commercial/final-detox/final-detox-003.jpg",
+      "images/commercial/final-detox/final-detox-007.jpg",
+      "images/commercial/final-detox/final-detox-006.jpg",
+      "images/commercial/final-detox/final-detox-005.jpg",
+      "images/commercial/final-detox/final-detox-001.jpg",
+      "images/commercial/final-detox/final-detox-009.jpg",
+      "images/commercial/final-detox/final-detox-008.jpg",
+      "images/commercial/final-detox/final-detox-004.jpg",
+    ],
+  },
+
+  {
+    title: "Phlur",
+    client: "",
+    year: "",
+    category: "product",
+    images: [
+      "images/commercial/phlur/phlur-014.jpg",
+    ],
+  },
+
+  {
+    title: "Torriden",
+    client: "",
+    year: "",
+    category: "product",
+    images: [
+      "images/commercial/torriden/torriden-015.jpg",
+      "images/commercial/torriden/torriden-021.jpg",
+      "images/commercial/torriden/torriden-019.jpg",
+      "images/commercial/torriden/torriden-020.jpg",
+      "images/commercial/torriden/torriden-022.jpg",
+    ],
+  },
+
+  {
     title: "Acacia",
     featured: true,
     client: "",
@@ -202,6 +244,16 @@ const COMMERCIAL_PROJECTS = [
       "images/commercial/alicia/alicia-021.jpg",
       "images/commercial/alicia/alicia-024.jpg",
       "images/commercial/alicia/alicia-025.jpg",
+    ],
+  },
+
+  {
+    title: "Bubble",
+    client: "",
+    year: "",
+    category: "beauty",
+    images: [
+      "images/commercial/bubble/bubble-017.jpg",
     ],
   },
 
