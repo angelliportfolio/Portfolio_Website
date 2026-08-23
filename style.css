@@ -257,6 +257,11 @@ body, html {
    One tile per project. The cover sits on top of a stack of the rest of
    the set; hovering fades through them. Columns are staggered vertically
    so the grid reads editorial rather than like a contact sheet. */
+/* An explicit display beats the `hidden` attribute, so restore it — without
+   this the gallery stays on screen behind the contact panel. */
+.commercial-gallery[hidden],
+.commercial-contact[hidden] { display: none; }
+
 .commercial-gallery {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -904,3 +909,131 @@ body.standalone * { font-family: 'Be Vietnam Pro', sans-serif; }
 
 .standalone-foot a { color: #a09a92; text-decoration: none; }
 .standalone-foot a:hover { color: #1a1a1a; }
+
+
+/* ==========================================================
+   CONTACT PANEL — commercial inquiry
+   Left column reads as a capability sheet, so a brand can tell in one
+   pass whether the work fits and what to send. Right column is the form.
+   ========================================================== */
+
+.contact-sub {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #a09a92;
+  margin: 34px 0 14px;
+  padding-bottom: 9px;
+  border-bottom: 1px solid #ece8e2;
+}
+
+.contact-list { list-style: none; margin: 0 0 4px; padding: 0; }
+
+.contact-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 18px;
+  padding: 9px 0;
+  border-bottom: 1px solid #f4f0ea;
+}
+
+.contact-list li:last-child { border-bottom: none; }
+
+.contact-list span {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: #1a1a1a;
+  white-space: nowrap;
+}
+
+.contact-list em {
+  font-style: normal;
+  font-size: 12px;
+  color: #8f877e;
+  text-align: right;
+}
+
+.contact-steps {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+  counter-reset: step;
+}
+
+.contact-steps li {
+  counter-increment: step;
+  position: relative;
+  padding: 0 0 13px 30px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #4a453f;
+}
+
+.contact-steps li::before {
+  content: counter(step, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 1px;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: #bdb5aa;
+  font-variant-numeric: tabular-nums;
+}
+
+.contact-direct {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 34px;
+  padding-top: 20px;
+  border-top: 1px solid #ece8e2;
+}
+
+.contact-label {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #a09a92;
+}
+
+.copy-btn {
+  font-family: inherit;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #8f877e;
+  background: none;
+  border: 1px solid #e2dcd4;
+  border-radius: 2px;
+  padding: 5px 11px;
+  cursor: pointer;
+  transition: color 0.25s, border-color 0.25s;
+}
+
+.copy-btn:hover { color: #1a1a1a; border-color: #1a1a1a; }
+
+.contact-note {
+  margin-top: 14px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #b3aaa0;
+}
+
+.form-fineprint {
+  font-size: 11px;
+  line-height: 1.7;
+  color: #a09a92;
+  margin-top: 4px;
+}
+
+.form-fineprint a { color: #6f675f; }
+
+@media (max-width: 700px) {
+  .contact-list li { flex-direction: column; gap: 3px; }
+  .contact-list em { text-align: left; }
+}
