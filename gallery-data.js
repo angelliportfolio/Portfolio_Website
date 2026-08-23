@@ -414,7 +414,7 @@ const COMMERCIAL_PROJECTS = [
     featured: true,
     client: "Don Kaka",
     year: "",
-    category: "fashion",
+    category: "campaigns",
     images: [
       "images/commercial/don-kaka/don-kaka-025.jpg",
       "images/commercial/don-kaka/don-kaka-001.jpg",

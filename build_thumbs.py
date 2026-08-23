@@ -23,7 +23,7 @@ KNOWN = {
  'tessi':            ('tessi','Tessi','Tessi','campaigns'),
  'leona_vanessa':    ('summer-fridays','Summer Fridays','Summer Fridays','campaigns'),
  'alessandra_kiara': ('tatcha','Tatcha','Tatcha','campaigns'),
- 'don_kaka':         ('don-kaka','Don Kaka','Don Kaka','fashion'),
+ 'don_kaka':         ('don-kaka','Don Kaka','Don Kaka','campaigns'),
  'product':          ('product','Product','','product'),
  'nail_shoot':       ('nail-editorial','Nail Editorial','','beauty'),
  'acacia_mcbride':   ('acacia','Acacia','','beauty'),
